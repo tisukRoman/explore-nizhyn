@@ -4,7 +4,7 @@ type CardProps = {};
 
 const Card = () => {
   return (
-    <div className='h-128 w-full bg-gray-200 overflow-hidden relative group'>
+    <div className='h-128 w-full bg-gray-200 overflow-hidden relative group first:col-span-2'>
       <Image
         src='/images/1.jpg'
         alt='nizhyn'
