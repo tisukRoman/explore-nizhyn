@@ -9,8 +9,8 @@ const posts = [
 
 const CardsList: FC<CardsListProps> = () => {
   return (
-    <div className='p-8 flex flex-wrap justify-between max-w-screen-2xl mx-auto'>
-      {[0, 0, 0].map((post, i) => (
+    <div className='p-6 grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8 max-w-screen-2xl mx-auto'>
+      {[0, 0, 0, 0, 0, 0, 0, 0, 0, 0].map((post, i) => (
         <Card key={i} />
       ))}
     </div>

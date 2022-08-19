@@ -4,14 +4,14 @@ type CardProps = {};
 
 const Card = () => {
   return (
-    <div className='h-128 w-96 relative mb-8'>
+    <div className='h-128 w-full bg-gray-200 overflow-hidden relative group'>
       <Image
         src='/images/1.jpg'
         alt='nizhyn'
         layout='fill'
-        className='object-cover w-full h-full z-0 drop-shadow-2xl'
+        className='object-cover w-full h-full z-0 drop-shadow-2xl lg:grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700'
       />
-      <div className='bg-black w-full h-full z-1 flex flex-col items-center justify-center absolute bg-opacity-70 shadow-2xl'>
+      <div className='bg-black w-full h-full z-1 flex flex-col items-center justify-center absolute bg-opacity-60 shadow-2xl'>
         <h3 className='text-white font-medium uppercase text-3xl hover-green'>
           Nizhyn City
         </h3>
@@ -23,7 +23,7 @@ const Card = () => {
           Read Post &#8594;
         </div>
       </div>
-      <div className='absolute bottom-8 left-4 flex w-full items-center cursor-pointer'>
+      <div className='absolute bottom-8 left-4 flex w-full items-center cursor-pointer lg:opacity-0 lg:translate-y-12 group-hover:opacity-80 group-hover:translate-y-0 transition-all duration-700'>
         <div className='w-12 h-12 rounded-full overflow-hidden relative'>
           <Image
             src='/images/user.png'
