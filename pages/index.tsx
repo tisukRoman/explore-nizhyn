@@ -1,7 +1,12 @@
 import type { NextPage } from 'next';
+import CardsList from '../components/CardsList';
 
 const Home: NextPage = () => {
-  return <h1 className='text-3xl font-bold underline'>Project setup</h1>;
+  return (
+    <div className='bg-black min-h-screen'>
+      <CardsList />
+    </div>
+  );
 };
 
 export default Home;

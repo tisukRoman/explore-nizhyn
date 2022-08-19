@@ -5,7 +5,22 @@ module.exports = {
     './components/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        black: '#212529',
+        green: '#77975e',
+      },
+      spacing: {
+        128: '32rem',
+        146: '36rem',
+        152: '38rem',
+        160: '40rem',
+        168: '42rem',
+      },
+      transitionDuration: {
+        DEFAULT: '500ms',
+      },
+    },
   },
   plugins: [],
 };
