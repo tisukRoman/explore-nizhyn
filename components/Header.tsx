@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { FC, useState } from 'react';
+import { FaChurch } from 'react-icons/fa';
 import { BiMenu } from 'react-icons/bi';
 import { BiSearchAlt2 } from 'react-icons/bi';
 import { BiUser } from 'react-icons/bi';
@@ -15,18 +16,23 @@ const Header: FC = () => {
     <header className='w-screen h-20 bg-[#000] fixed z-10 text-white'>
       <nav className='max-w-[90%] xl:max-w-screen-xl lg:max-w-screen-lg md:max-w-screen-sm h-20 mx-auto flex items-center text-2xl'>
         <Link href='/'>
-          <h1 className='grow hover-green'>NIZHYN</h1>
+          <h1 className='grow hover-green font-serif flex items-center'>
+            Nizhyn <FaChurch className='ml-4' />
+          </h1>
         </Link>
-        <div onClick={toggleMenu} className='mr-8 hover-green'>
+        <div onClick={toggleMenu} className='hover-green lg:hidden'>
           <BiMenu />
         </div>
+        <div className='hidden lg:flex'>
+          <TextLinks />
+        </div>
         <Link href='/'>
-          <a className='mr-8 hover-green'>
+          <a className='hover-green ml-10'>
             <BiSearchAlt2 />
           </a>
         </Link>
         <Link href='/'>
-          <a className='hover-green'>
+          <a className='hover-green ml-10'>
             <BiUser />
           </a>
         </Link>
@@ -36,23 +42,31 @@ const Header: FC = () => {
           isOpen ? 'h-40' : 'h-0'
         }`}
       >
-        <Link href='/'>
-          <a className='block p-4 border-t-[1px] w-[95%] border-gray-300 border-opacity-20 pl-8 font-base text-sm hover-green'>
-            AUTHOR LIST
-          </a>
-        </Link>
-        <Link href='/'>
-          <a className='block p-4 border-t-[1px] w-[95%] border-gray-300 border-opacity-20 pl-8 font-base text-sm hover-green'>
-            TAG LIST
-          </a>
-        </Link>
-        <Link href='/'>
-          <a className='block p-4 border-t-[1px] w-[95%] border-gray-300 border-opacity-20 pl-8 font-base text-sm hover-green'>
-            ABOUT ME
-          </a>
-        </Link>
+        <TextLinks />
       </div>
     </header>
+  );
+};
+
+const TextLinks: FC = () => {
+  return (
+    <>
+      <Link href='/'>
+        <a className='block p-4 border-t-[1px] border-gray-300 border-opacity-20 pl-8 font-light text-sm hover-green lg:border-none'>
+          AUTHOR LIST
+        </a>
+      </Link>
+      <Link href='/'>
+        <a className='block p-4 border-t-[1px] border-gray-300 border-opacity-20 pl-8 font-light text-sm hover-green lg:border-none'>
+          TAG LIST
+        </a>
+      </Link>
+      <Link href='/'>
+        <a className='block p-4 border-t-[1px] border-gray-300 border-opacity-20 pl-8 font-light text-sm hover-green lg:border-none'>
+          ABOUT ME
+        </a>
+      </Link>
+    </>
   );
 };
 
