@@ -37,7 +37,7 @@ const Card = () => {
           Roman Tyschuk
         </div>
       </div>
-      <div className='absolute top-4 right-4 w-14 h-14 bg-white bg-opacity-60 hover:bg-opacity-100 rounded-full flex justify-center items-center cursor-pointer text-3xl lg:opacity-0 lg:-translate-y-10 group-hover:opacity-60 group-hover:translate-y-0 transition-all duration-700'>
+      <div className='absolute top-4 right-4 w-14 h-14 bg-slate-200 bg-opacity-60 hover:bg-opacity-100 rounded-full flex justify-center items-center cursor-pointer text-3xl lg:opacity-0 lg:-translate-y-10 group-hover:opacity-60 group-hover:translate-y-0 transition-all duration-700'>
         <BiLink />
       </div>
     </div>
