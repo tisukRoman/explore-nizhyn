@@ -38,7 +38,7 @@ const Header: FC = () => {
         </Link>
       </nav>
       <div
-        className={`fixed top-20 right-1 bg-[#000] w-full overflow-hidden transition-all ${
+        className={`fixed top-20 left-0 bg-[#000] w-[90vw] md:max-w-screen-sm md:left-2/4 md:-translate-x-1/2 overflow-hidden transition-all ${
           isOpen ? 'h-40' : 'h-0'
         }`}
       >
