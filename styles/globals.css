@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  background-color: #212529;
+}
+
 @layer utilities {
   .hover-green {
     @apply hover:text-green transition-colors cursor-pointer;

@@ -24,12 +24,12 @@ type HomeProps = {
 
 const Home: NextPage<HomeProps> = ({ posts }) => {
   return (
-    <div className='bg-black'>
+    <>
       <Header />
       <main className='pt-16 min-h-screen'>
         <CardsList posts={posts} />
       </main>
-    </div>
+    </>
   );
 };
 

@@ -31,7 +31,7 @@ const Header: FC = () => {
             <BiSearchAlt2 />
           </a>
         </Link>
-        <Link href='/'>
+        <Link href='/auth/login'>
           <a className='hover-green ml-10'>
             <BiUser />
           </a>
