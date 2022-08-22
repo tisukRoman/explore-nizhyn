@@ -10,13 +10,16 @@ type FormValues = {
   password: string;
 };
 
-const loginSchema = yup.object({
-  email: yup.string().required('Required'),
-  password: yup.string().required('Required'),
+const schema = yup.object({
+  email: yup.string().required('Email required').email('Wrong email format'),
+  password: yup
+    .string()
+    .required('Password required')
+    .min(6, 'Minimum 6 characters'),
 });
 
 type LoginProps = {
-  onSubmit: (data: any) => void;
+  onSubmit: (data: FormValues) => void;
 };
 
 const LoginForm: FC<LoginProps> = ({ onSubmit }) => {
@@ -24,19 +27,26 @@ const LoginForm: FC<LoginProps> = ({ onSubmit }) => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormValues>({ resolver: yupResolver(loginSchema) });
+  } = useForm<FormValues>({ mode: 'onBlur', resolver: yupResolver(schema) });
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className='w-full h-80'>
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className='w-full h-80 mx-auto md:max-w-screen-sm'
+    >
       <TextInput
-        {...register('email')}
         type='email'
+        {...register('email')}
         placeholder='Enter email...'
+        has_error={!!errors.email}
+        error_text={errors.email?.message}
       />
       <TextInput
-        {...register('password')}
         type='password'
+        {...register('password')}
         placeholder='Enter password...'
+        has_error={!!errors.password}
+        error_text={errors.password?.message}
       />
       <Button type='submit'>Submit</Button>
     </form>

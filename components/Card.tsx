@@ -9,7 +9,7 @@ type CardProps = {
 
 const Card: FC<CardProps> = ({ post }) => {
   return (
-    <div className='h-128 w-full bg-gray-200 overflow-hidden relative group first:col-span-2'>
+    <div className='h-128 w-full bg-gray-200 overflow-hidden relative group lg:first:col-span-2'>
       <Image
         unoptimized
         src={post.img_src || '/images/placeholder.png'}

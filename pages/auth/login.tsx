@@ -3,8 +3,13 @@ import Header from '../../components/Header';
 import LoginForm from '../../components/LoginForm';
 import PageTitle from '../../components/PageTitle';
 
+type FormValues = {
+  email: string;
+  password: string;
+};
+
 const Login: NextPage = () => {
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: FormValues) => {
     console.log(data);
   };
 
