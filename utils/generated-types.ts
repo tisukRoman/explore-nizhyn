@@ -23,7 +23,7 @@ export interface paths {
           img_src?: parameters["rowFilter.posts.img_src"];
           content?: parameters["rowFilter.posts.content"];
           tag?: parameters["rowFilter.posts.tag"];
-          author?: parameters["rowFilter.posts.author"];
+          user_id?: parameters["rowFilter.posts.user_id"];
           /** Filtering Columns */
           select?: parameters["select"];
           /** Ordering */
@@ -81,7 +81,7 @@ export interface paths {
           img_src?: parameters["rowFilter.posts.img_src"];
           content?: parameters["rowFilter.posts.content"];
           tag?: parameters["rowFilter.posts.tag"];
-          author?: parameters["rowFilter.posts.author"];
+          user_id?: parameters["rowFilter.posts.user_id"];
         };
         header: {
           /** Preference */
@@ -103,7 +103,7 @@ export interface paths {
           img_src?: parameters["rowFilter.posts.img_src"];
           content?: parameters["rowFilter.posts.content"];
           tag?: parameters["rowFilter.posts.tag"];
-          author?: parameters["rowFilter.posts.author"];
+          user_id?: parameters["rowFilter.posts.user_id"];
         };
         body: {
           /** posts */
@@ -149,7 +149,7 @@ export interface definitions {
     /** Format: text */
     tag?: string;
     /** Format: uuid */
-    author?: string;
+    user_id?: string;
   };
 }
 
@@ -203,7 +203,7 @@ export interface parameters {
   /** Format: text */
   "rowFilter.posts.tag": string;
   /** Format: uuid */
-  "rowFilter.posts.author": string;
+  "rowFilter.posts.user_id": string;
 }
 
 export interface operations {}
