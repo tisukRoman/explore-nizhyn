@@ -1,15 +1,15 @@
 import { NextPage } from 'next';
 import Link from 'next/link';
 import Header from '../../components/Header';
-import LoginForm from '../../components/LoginForm';
 import PageTitle from '../../components/PageTitle';
+import RegisterForm from '../../components/RegisterForm';
 
 type FormValues = {
   email: string;
   password: string;
 };
 
-const Login: NextPage = () => {
+const Register: NextPage = () => {
   const onSubmit = (data: FormValues) => {
     console.log(data);
   };
@@ -18,15 +18,15 @@ const Login: NextPage = () => {
     <>
       <Header />
       <main className='pt-32 w-[80%] mx-auto text-center'>
-        <PageTitle>Login</PageTitle>
-        <LoginForm onSubmit={onSubmit} />
-        <p className='text-white mt-6'>{`Don't`} have account? </p>
-        <Link href='/auth/register'>
-          <a className='text-red-600 font-bold text-lg block mt-4'>Sign Up</a>
-        </Link>
+        <PageTitle>Sign Up</PageTitle>
+        <RegisterForm onSubmit={onSubmit} />
+        <p className='text-white mt-6'>Already have account? </p>
+        <Link href='/auth/login'>
+          <a className='text-red-600 font-bold text-lg block mt-4'>Login</a>
+        </Link>{' '}
       </main>
     </>
   );
 };
 
-export default Login;
+export default Register;
