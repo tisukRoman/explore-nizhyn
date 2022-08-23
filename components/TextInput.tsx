@@ -2,7 +2,7 @@ import { forwardRef, HTMLProps } from 'react';
 
 interface InputProps extends HTMLProps<HTMLInputElement> {
   error_text?: string;
-  has_error: boolean;
+  has_error: 1 | 0;
 }
 
 const TextInput = forwardRef<HTMLInputElement, InputProps>((props, ref) => {

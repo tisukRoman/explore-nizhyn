@@ -38,14 +38,14 @@ const LoginForm: FC<LoginProps> = ({ onSubmit }) => {
         type='email'
         {...register('email')}
         placeholder='Enter email...'
-        has_error={!!errors.email}
+        has_error={errors.email ? 1 : 0}
         error_text={errors.email?.message}
       />
       <TextInput
         type='password'
         {...register('password')}
         placeholder='Enter password...'
-        has_error={!!errors.password}
+        has_error={errors.password ? 1 : 0}
         error_text={errors.password?.message}
       />
       <Button type='submit'>Submit</Button>

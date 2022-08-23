@@ -20,7 +20,7 @@ const Register: NextPage = () => {
       <main className='pt-32 w-[80%] mx-auto text-center'>
         <PageTitle>Sign Up</PageTitle>
         <RegisterForm onSubmit={onSubmit} />
-        <p className='text-white mt-6'>Already have account? </p>
+        <div className='text-white mt-48'>Already have account? </div>
         <Link href='/auth/login'>
           <a className='text-red-600 font-bold text-lg block mt-4'>Login</a>
         </Link>{' '}
