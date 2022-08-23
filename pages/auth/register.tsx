@@ -1,17 +1,19 @@
 import { NextPage } from 'next';
+import { useRouter } from 'next/router';
 import Link from 'next/link';
+import { db } from '../../utils/db';
+import { SignUpData } from '../../utils/types';
 import Header from '../../components/Header';
 import PageTitle from '../../components/PageTitle';
 import RegisterForm from '../../components/RegisterForm';
 
-type FormValues = {
-  email: string;
-  password: string;
-};
-
 const Register: NextPage = () => {
-  const onSubmit = (data: FormValues) => {
-    console.log(data);
+  const router = useRouter();
+
+  const onSubmit = async (data: SignUpData) => {
+    const { user, session } = await db.signUp(data);
+    console.log(user, session);
+    router.push('/');
   };
 
   return (

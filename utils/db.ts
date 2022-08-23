@@ -1,8 +1,8 @@
 import { supabase } from './supabaseClient';
-import { AuthData, Post } from './types';
+import { SignUpData, Post, LoginData } from './types';
 
-export const db = {
-  async getPostList() {
+export class db {
+  static async getPostList() {
     const { data, error } = await supabase
       .from<Post>('posts')
       .select('id, title, img_src, tag');
@@ -11,8 +11,9 @@ export const db = {
       throw new Error(error.message);
     }
     return data;
-  },
-  async signUp(authData: AuthData) {
+  }
+
+  static async signUp(authData: SignUpData) {
     const { user, session, error } = await supabase.auth.signUp(
       {
         email: authData.email,
@@ -29,5 +30,16 @@ export const db = {
       throw new Error(error.message);
     }
     return { user, session };
-  },
-};
+  }
+
+  static async login(loginData: LoginData) {
+    const { user, error } = await supabase.auth.signIn({
+      email: loginData.email,
+      password: loginData.password,
+    });
+    if (error) {
+      throw new Error(error.message);
+    }
+    return user;
+  }
+}

@@ -2,7 +2,7 @@ import { FC } from 'react';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
-import { AuthData } from '../utils/types';
+import { SignUpData } from '../utils/types';
 import TextInput from './TextInput';
 import Button from './Button';
 
@@ -20,7 +20,7 @@ const schema = yup.object({
 });
 
 type RegisterProps = {
-  onSubmit: (data: AuthData) => void;
+  onSubmit: (data: SignUpData) => void;
 };
 
 const RegisterForm: FC<RegisterProps> = ({ onSubmit }) => {
@@ -28,7 +28,7 @@ const RegisterForm: FC<RegisterProps> = ({ onSubmit }) => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<AuthData>({ mode: 'onBlur', resolver: yupResolver(schema) });
+  } = useForm<SignUpData>({ mode: 'onBlur', resolver: yupResolver(schema) });
 
   return (
     <form
