@@ -78,23 +78,20 @@ const Header: FC = () => {
 };
 
 const TextLinks: FC = () => {
+  const links = [
+    { title: 'AUTHOR LIST', href: '/authors' },
+    { title: 'TAG LIST', href: '/tags' },
+    { title: 'ABOUT ME', href: '/about_me' },
+  ];
   return (
     <>
-      <Link href='/'>
-        <a className='block p-4 border-t-[1px] border-gray-300 border-opacity-20 pl-8 font-light text-sm hover-green lg:border-none'>
-          AUTHOR LIST
-        </a>
-      </Link>
-      <Link href='/'>
-        <a className='block p-4 border-t-[1px] border-gray-300 border-opacity-20 pl-8 font-light text-sm hover-green lg:border-none'>
-          TAG LIST
-        </a>
-      </Link>
-      <Link href='/'>
-        <a className='block p-4 border-t-[1px] border-gray-300 border-opacity-20 pl-8 font-light text-sm hover-green lg:border-none'>
-          ABOUT ME
-        </a>
-      </Link>
+      {links.map(({ title, href }) => (
+        <Link key={title} href={href}>
+          <a className='block p-4 border-t-[1px] border-gray-300 border-opacity-20 pl-8 font-light text-sm hover-green lg:border-none'>
+            {title}
+          </a>
+        </Link>
+      ))}
     </>
   );
 };
