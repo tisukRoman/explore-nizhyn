@@ -4,9 +4,13 @@ import { FaChurch } from 'react-icons/fa';
 import { BiMenu } from 'react-icons/bi';
 import { BiSearchAlt2 } from 'react-icons/bi';
 import { BiUser } from 'react-icons/bi';
+import { useSession } from '../hooks/useSession';
 
 const Header: FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const session = useSession();
+
+  console.log(session);
 
   const toggleMenu = () => {
     setIsOpen((s) => !s);
