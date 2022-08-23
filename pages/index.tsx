@@ -5,14 +5,7 @@ import Header from '../components/Header';
 import CardsList from '../components/CardsList';
 
 export const getStaticProps: GetStaticProps = async () => {
-  const { data: posts, error } = await db
-    .posts()
-    .select('id, title, img_src, tag');
-
-  if (error) {
-    throw new Error(error.message);
-  }
-
+  const posts = await db.getPostList();
   return {
     props: { posts },
   };
