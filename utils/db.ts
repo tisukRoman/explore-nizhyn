@@ -5,7 +5,21 @@ export class db {
   static async getPostList() {
     const { data, error } = await supabase
       .from<Post>('posts')
-      .select('id, title, img_src, tag');
+      .select('id, title, img_src, tag')
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      throw new Error(error.message);
+    }
+    return data;
+  }
+
+  static async getPostDetails(post_id: number) {
+    const { data, error } = await supabase
+      .from<Post>('posts')
+      .select('*')
+      .eq('id', post_id)
+      .single();
 
     if (error) {
       throw new Error(error.message);

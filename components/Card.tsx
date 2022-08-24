@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import Link from 'next/link';
 import Image from 'next/image';
 import { Post } from '../utils/types';
 import { BiLink } from 'react-icons/bi';
@@ -25,9 +26,11 @@ const Card: FC<CardProps> = ({ post }) => {
           {post.tag}
         </p>
         <div className='bg-green w-10 my-3 h-1' />
-        <div className='text-white uppercase font-medium hover-green'>
-          Читати пост &#8594;
-        </div>
+        <Link href={`/posts/${post.id}`}>
+          <a className='text-white uppercase font-medium hover-green'>
+            Читати пост &#8594;
+          </a>
+        </Link>
       </div>
       <div className='absolute bottom-8 left-4 flex w-full items-center cursor-pointer lg:opacity-0 lg:translate-y-12 group-hover:opacity-80 group-hover:translate-y-0 transition-all duration-700'>
         <div className='w-12 h-12 rounded-full overflow-hidden relative'>
@@ -39,7 +42,7 @@ const Card: FC<CardProps> = ({ post }) => {
           />
         </div>
         <div className='text-white ml-4 font-light hover-green'>
-          {post.author || 'unknown'}
+          {post.user_id || 'unknown'}
         </div>
       </div>
       <div className='absolute top-4 right-4 w-14 h-14 bg-slate-200 bg-opacity-60 hover:bg-opacity-100 rounded-full flex justify-center items-center cursor-pointer text-3xl lg:opacity-0 lg:-translate-y-10 group-hover:opacity-60 group-hover:translate-y-0 transition-all duration-700'>
