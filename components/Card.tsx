@@ -19,9 +19,11 @@ const Card: FC<CardProps> = ({ post }) => {
         className='object-cover w-full h-full z-0 drop-shadow-2xl lg:grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700'
       />
       <div className='bg-black w-full h-full z-1 flex flex-col items-center justify-center absolute bg-opacity-60 shadow-2xl'>
-        <h3 className='text-white font-medium uppercase text-3xl hover-green text-center max-w-[80%] mx-auto'>
-          {post.title}
-        </h3>
+        <Link href={`/posts/${post.id}`}>
+          <h3 className='text-white font-medium uppercase text-3xl hover-green text-center max-w-[80%] mx-auto'>
+            {post.title}
+          </h3>
+        </Link>
         <p className='text-slate-200 text-base my-2 uppercase hover-green'>
           {post.tag}
         </p>

@@ -10,7 +10,7 @@ type PostCoverProps = {
 
 const PostCover: FC<PostCoverProps> = (props) => {
   return (
-    <div className='w-screen h-128 bg-[#000] relative'>
+    <div className='w-full h-128 bg-[#000] relative'>
       <Image
         unoptimized
         src={props.img_src}
