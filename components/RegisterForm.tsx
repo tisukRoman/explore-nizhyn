@@ -7,16 +7,16 @@ import TextInput from './TextInput';
 import Button from './Button';
 
 const schema = yup.object({
-  email: yup.string().required('Email required').email('Wrong email format'),
+  email: yup.string().required(`Обов'язкове поле`).email('Неправильний формат'),
   password: yup
     .string()
-    .required('Password required')
-    .min(6, 'Minimum 6 characters'),
+    .required(`Обов'язкове поле`)
+    .min(6, 'Мінімум 6 символів'),
   username: yup
     .string()
-    .required('User Name required')
-    .min(6, 'Minimum 6 characters'),
-  avatar_url: yup.string().url('Must be url'),
+    .required(`Обов'язкове поле`)
+    .min(6, 'Мінімум 6 символів'),
+  avatar_url: yup.string().url('Має бути посилання'),
 });
 
 type RegisterProps = {
@@ -38,32 +38,32 @@ const RegisterForm: FC<RegisterProps> = ({ onSubmit }) => {
       <TextInput
         type='email'
         {...register('email')}
-        placeholder='Enter email...'
+        placeholder='Введіть email...'
         has_error={errors.email ? 1 : 0}
         error_text={errors.email?.message}
       />
       <TextInput
         type='password'
         {...register('password')}
-        placeholder='Enter password...'
+        placeholder='Введіть пароль...'
         has_error={errors.password ? 1 : 0}
         error_text={errors.password?.message}
       />
       <TextInput
         type='text'
         {...register('username')}
-        placeholder='Enter user name...'
+        placeholder={`Введіть повне ім'я...`}
         has_error={errors.username ? 1 : 0}
         error_text={errors.username?.message}
       />
       <TextInput
         type='text'
         {...register('avatar_url')}
-        placeholder='Enter avatar url (optional)...'
+        placeholder={`Введіть посилання на картинку аватара (не обов'язково)...`}
         has_error={errors.avatar_url ? 1 : 0}
         error_text={errors.avatar_url?.message}
       />
-      <Button type='submit'>Submit</Button>
+      <Button type='submit'>Створити акаунт</Button>
     </form>
   );
 };

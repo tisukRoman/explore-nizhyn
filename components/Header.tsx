@@ -28,7 +28,7 @@ const Header: FC = () => {
         <Link href='/'>
           <h1 className='grow'>
             <a className='hover-green font-serif items-center flex'>
-              Nizhyn <FaChurch className='ml-5' />
+              Ніжин <FaChurch className='ml-5' />
             </a>
           </h1>
         </Link>
@@ -79,9 +79,9 @@ const Header: FC = () => {
 
 const TextLinks: FC = () => {
   const links = [
-    { title: 'AUTHOR LIST', href: '/authors' },
-    { title: 'TAG LIST', href: '/tags' },
-    { title: 'ABOUT ME', href: '/about_me' },
+    { title: 'Автори', href: '/authors' },
+    { title: 'Теги', href: '/tags' },
+    { title: 'Про мене', href: '/about_me' },
   ];
   return (
     <>

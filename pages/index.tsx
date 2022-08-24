@@ -1,15 +1,8 @@
 import type { GetStaticProps, NextPage } from 'next';
-import { db } from '../utils/db';
 import { Post } from '../utils/types';
+import { db } from '../utils/db';
 import Header from '../components/Header';
 import CardsList from '../components/CardsList';
-
-export const getStaticProps: GetStaticProps = async () => {
-  const posts = await db.getPostList();
-  return {
-    props: { posts },
-  };
-};
 
 type HomeProps = {
   posts: Post[];
@@ -24,6 +17,13 @@ const Home: NextPage<HomeProps> = ({ posts }) => {
       </main>
     </>
   );
+};
+
+export const getStaticProps: GetStaticProps = async () => {
+  const posts = await db.getPostList();
+  return {
+    props: { posts },
+  };
 };
 
 export default Home;

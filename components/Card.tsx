@@ -26,7 +26,7 @@ const Card: FC<CardProps> = ({ post }) => {
         </p>
         <div className='bg-green w-10 my-3 h-1' />
         <div className='text-white uppercase font-medium hover-green'>
-          Read Post &#8594;
+          Читати пост &#8594;
         </div>
       </div>
       <div className='absolute bottom-8 left-4 flex w-full items-center cursor-pointer lg:opacity-0 lg:translate-y-12 group-hover:opacity-80 group-hover:translate-y-0 transition-all duration-700'>

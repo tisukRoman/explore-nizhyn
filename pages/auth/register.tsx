@@ -1,8 +1,8 @@
+import Link from 'next/link';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import Link from 'next/link';
-import { db } from '../../utils/db';
 import { SignUpData } from '../../utils/types';
+import { db } from '../../utils/db';
 import Header from '../../components/Header';
 import PageTitle from '../../components/PageTitle';
 import RegisterForm from '../../components/RegisterForm';
@@ -20,11 +20,11 @@ const Register: NextPage = () => {
     <>
       <Header />
       <main className='pt-32 w-[80%] mx-auto text-center'>
-        <PageTitle>Sign Up</PageTitle>
+        <PageTitle>Реєстреція</PageTitle>
         <RegisterForm onSubmit={onSubmit} />
-        <div className='text-white mt-48'>Already have account? </div>
+        <div className='text-white mt-48'>Уже маєте акаунт? </div>
         <Link href='/auth/login'>
-          <a className='text-red-600 font-bold text-lg block mt-4'>Login</a>
+          <a className='text-red-600 font-bold text-lg block mt-4'>Увійдіть</a>
         </Link>{' '}
       </main>
     </>
