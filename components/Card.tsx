@@ -1,11 +1,11 @@
 import { FC } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Post } from '../utils/types';
+import { PostWithAuthor } from '../utils/types';
 import { BiLink } from 'react-icons/bi';
 
 type CardProps = {
-  post: Post;
+  post: PostWithAuthor;
 };
 
 const Card: FC<CardProps> = ({ post }) => {
@@ -37,14 +37,15 @@ const Card: FC<CardProps> = ({ post }) => {
       <div className='absolute bottom-8 left-4 flex w-full items-center cursor-pointer lg:opacity-0 lg:translate-y-12 group-hover:opacity-80 group-hover:translate-y-0 transition-all duration-700'>
         <div className='w-12 h-12 rounded-full overflow-hidden relative'>
           <Image
-            src='/images/user.png'
+            unoptimized
+            src={post.profiles.avatar_url || '/images/user.png'}
             alt='Author Avatar'
             layout='fill'
             objectFit='contain'
           />
         </div>
         <div className='text-white ml-4 font-light hover-green'>
-          {post.user_id || 'unknown'}
+          {post.profiles.username}
         </div>
       </div>
       <div className='absolute top-4 right-4 w-14 h-14 bg-slate-200 bg-opacity-60 hover:bg-opacity-100 rounded-full flex justify-center items-center cursor-pointer text-3xl lg:opacity-0 lg:-translate-y-10 group-hover:opacity-60 group-hover:translate-y-0 transition-all duration-700'>

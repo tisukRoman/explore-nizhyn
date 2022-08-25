@@ -1,11 +1,11 @@
 import type { GetStaticProps, NextPage } from 'next';
-import { Post } from '../utils/types';
+import { PostWithAuthor } from '../utils/types';
 import { db } from '../utils/db';
 import Header from '../components/Header';
 import CardsList from '../components/CardsList';
 
 type HomeProps = {
-  posts: Post[];
+  posts: PostWithAuthor[];
 };
 
 const Home: NextPage<HomeProps> = ({ posts }) => {

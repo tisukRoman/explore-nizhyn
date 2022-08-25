@@ -1,7 +1,8 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { db } from '../utils/db';
+import { Profile } from '../utils/types';
 import { FiMenu } from 'react-icons/fi';
 import { BiUser } from 'react-icons/bi';
 import { FaChurch } from 'react-icons/fa';
@@ -10,9 +11,20 @@ import { AiOutlineLogout } from 'react-icons/ai';
 import { useSession } from '../hooks/useSession';
 
 const Header: FC = () => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
   const session = useSession();
-  const userAvatar = session?.user?.user_metadata.avatar_url;
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [profile, setProfile] = useState<Profile | null>(null);
+
+  useEffect(() => {
+    async function loadProfile() {
+      const profileId = session?.user?.id;
+      if (profileId) {
+        const data = await db.getProfile(profileId);
+        setProfile(data);
+      }
+    }
+    loadProfile();
+  }, [session]);
 
   const toggleMenu = () => {
     setIsOpen((s) => !s);
@@ -43,7 +55,7 @@ const Header: FC = () => {
             <BiSearchAlt2 />
           </a>
         </Link>
-        {session ? (
+        {profile ? (
           <>
             <div onClick={onLogout} className='hover-green ml-5 md:ml-8'>
               <AiOutlineLogout />
@@ -51,7 +63,9 @@ const Header: FC = () => {
             <div className='ml-5 md:ml-8 overflow-hidden relative w-9 h-9 rounded-full'>
               <Image
                 unoptimized
-                src={userAvatar ? userAvatar : '/images/user.png'}
+                src={
+                  profile.avatar_url ? profile.avatar_url : '/images/user.png'
+                }
                 alt='user avatar'
                 layout='fill'
                 className='object-cover w-full h-full'
