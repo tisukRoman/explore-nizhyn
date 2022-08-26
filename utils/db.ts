@@ -43,7 +43,7 @@ export class db {
     const { data, error } = await supabase
       .from<Comment>('comments')
       .select('*, profiles(id, username, avatar_url)')
-      .eq('id', post_id);
+      .eq('post_id', post_id);
     if (error) throw error;
     return data;
   }

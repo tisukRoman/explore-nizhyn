@@ -1,11 +1,16 @@
 import { GetServerSideProps, NextPage } from 'next';
-import { PostDetails } from '../../utils/types';
+import { Comment, PostDetails } from '../../utils/types';
 import { db } from '../../utils/db';
 import Header from '../../components/Header';
 import PostCover from '../../components/PostCover';
 import CommentList from '../../components/CommentList';
 
-const PostDetails: NextPage<{ post: PostDetails }> = ({ post }) => {
+type PostDetailsProps = {
+  post: PostDetails;
+  comments: Comment[];
+};
+
+const PostDetails: NextPage<PostDetailsProps> = ({ post, comments }) => {
   return (
     <>
       <Header />
@@ -19,7 +24,7 @@ const PostDetails: NextPage<{ post: PostDetails }> = ({ post }) => {
         <article className='text-slate-300 text-lg px-8 py-12 font-mono md:text-2xl'>
           <p className='leading-8 md:leading-10'>{post.content}</p>
         </article>
-        <CommentList comments={post.comments} />
+        <CommentList comments={comments} />
       </main>
     </>
   );
@@ -34,9 +39,13 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     };
   }
 
-  const post = await db.getPostDetails(Number(post_id));
+  const [post, comments] = await Promise.all([
+    db.getPostDetails(Number(post_id)),
+    db.getPostComments(Number(post_id)),
+  ]);
+
   return {
-    props: { post },
+    props: { post, comments },
   };
 };
 
