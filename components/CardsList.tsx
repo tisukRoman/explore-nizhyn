@@ -1,9 +1,9 @@
 import { FC } from 'react';
-import { PostWithAuthor } from '../utils/types';
+import { Post } from '../utils/types';
 import Card from './Card';
 
 type CardsListProps = {
-  posts: PostWithAuthor[];
+  posts: Post[];
 };
 
 const CardsList: FC<CardsListProps> = ({ posts }) => {

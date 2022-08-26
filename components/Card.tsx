@@ -1,11 +1,11 @@
 import { FC } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { PostWithAuthor } from '../utils/types';
+import { Post } from '../utils/types';
 import { BiLink } from 'react-icons/bi';
 
 type CardProps = {
-  post: PostWithAuthor;
+  post: Post;
 };
 
 const Card: FC<CardProps> = ({ post }) => {

@@ -1,10 +1,11 @@
 import { GetServerSideProps, NextPage } from 'next';
-import { Post } from '../../utils/types';
+import { PostDetails } from '../../utils/types';
 import { db } from '../../utils/db';
 import Header from '../../components/Header';
 import PostCover from '../../components/PostCover';
+import CommentList from '../../components/CommentList';
 
-const PostDetails: NextPage<{ post: Post }> = ({ post }) => {
+const PostDetails: NextPage<{ post: PostDetails }> = ({ post }) => {
   return (
     <>
       <Header />
@@ -18,6 +19,7 @@ const PostDetails: NextPage<{ post: Post }> = ({ post }) => {
         <article className='text-slate-300 text-lg px-8 py-12 font-mono md:text-2xl'>
           <p className='leading-8 md:leading-10'>{post.content}</p>
         </article>
+        <CommentList comments={post.comments} />
       </main>
     </>
   );
