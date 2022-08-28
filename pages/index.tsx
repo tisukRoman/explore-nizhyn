@@ -1,7 +1,7 @@
 import type { GetStaticProps, NextPage } from 'next';
 import { Post } from '../utils/types';
 import { db } from '../utils/db';
-import Header from '../components/Header';
+import Layout from '../components/Layout';
 import CardsList from '../components/CardsList';
 
 type HomeProps = {
@@ -10,12 +10,11 @@ type HomeProps = {
 
 const Home: NextPage<HomeProps> = ({ posts }) => {
   return (
-    <>
-      <Header />
+    <Layout>
       <main className='pt-16 min-h-screen'>
         <CardsList posts={posts} />
       </main>
-    </>
+    </Layout>
   );
 };
 

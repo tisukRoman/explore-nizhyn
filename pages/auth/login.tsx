@@ -1,9 +1,9 @@
 import Link from 'next/link';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { LoginData } from '../../utils/types';
 import { db } from '../../utils/db';
-import Header from '../../components/Header';
+import { LoginData } from '../../utils/types';
+import Layout from '../../components/Layout';
 import LoginForm from '../../components/LoginForm';
 import PageTitle from '../../components/PageTitle';
 
@@ -17,17 +17,18 @@ const Login: NextPage = () => {
   };
 
   return (
-    <>
-      <Header />
+    <Layout>
       <main className='pt-32 w-[80%] mx-auto text-center'>
         <PageTitle>Увійдіть в акаунт</PageTitle>
         <LoginForm onSubmit={onSubmit} />
         <p className='text-white mt-6'>Не маєте акаунту? </p>
         <Link href='/auth/register'>
-          <a className='text-red-600 font-bold text-lg block mt-4'>Створіть акаунт</a>
+          <a className='text-red-600 font-bold text-lg block mt-4'>
+            Створіть акаунт
+          </a>
         </Link>
       </main>
-    </>
+    </Layout>
   );
 };
 

@@ -1,7 +1,7 @@
 import { GetServerSideProps, NextPage } from 'next';
 import { Comment, PostDetails } from '../../utils/types';
 import { db } from '../../utils/db';
-import Header from '../../components/Header';
+import Layout from '../../components/Layout';
 import PostCover from '../../components/PostCover';
 import CommentList from '../../components/CommentList';
 
@@ -12,8 +12,7 @@ type PostDetailsProps = {
 
 const PostDetails: NextPage<PostDetailsProps> = ({ post, comments }) => {
   return (
-    <>
-      <Header />
+    <Layout>
       <main className='pt-20 mx-auto lg:max-w-screen-lg shadow-xl shadow-[#1a1a1a]'>
         <PostCover post={post} />
         <article className='text-slate-300 text-lg px-8 py-12 font-mono md:text-2xl'>
@@ -21,7 +20,7 @@ const PostDetails: NextPage<PostDetailsProps> = ({ post, comments }) => {
         </article>
         <CommentList comments={comments} />
       </main>
-    </>
+    </Layout>
   );
 };
 

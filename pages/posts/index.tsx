@@ -1,8 +1,8 @@
 import type { GetServerSideProps, NextPage } from 'next';
 import CardsList from '../../components/CardsList';
-import Header from '../../components/Header';
-import { db } from '../../utils/db';
+import Layout from '../../components/Layout';
 import { Post } from '../../utils/types';
+import { db } from '../../utils/db';
 
 type PostsProps = {
   posts: Post[];
@@ -10,12 +10,11 @@ type PostsProps = {
 
 const Posts: NextPage<PostsProps> = ({ posts }) => {
   return (
-    <>
-      <Header />
+    <Layout>
       <main className='pt-16 min-h-screen'>
         <CardsList posts={posts} />
       </main>
-    </>
+    </Layout>
   );
 };
 
