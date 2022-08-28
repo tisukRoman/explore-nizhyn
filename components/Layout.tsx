@@ -1,6 +1,7 @@
 import { FC, ReactNode } from 'react';
 import Head from 'next/head';
 import Header from './Header';
+import Footer from './Footer';
 
 type LayoutProps = {
   title?: string;
@@ -20,10 +21,11 @@ const Layout: FC<LayoutProps> = (props) => {
         <meta name='keywords' content={keywords} />
         <link rel='icon' type='image/x-icon' href='/favicon.ico' />
       </Head>
-      <div>
+      <>
         <Header />
         {children}
-      </div>
+        <Footer />
+      </>
     </>
   );
 };
