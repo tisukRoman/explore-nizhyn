@@ -85,17 +85,24 @@ const Header: FC = () => {
           isOpen ? 'h-40' : 'h-0'
         }`}
       >
-        <TextLinks />
+        <TextLinks user_id={profile?.id} />
       </div>
     </header>
   );
 };
 
-const TextLinks: FC = () => {
+type TextLinksProps = {
+  user_id?: string;
+};
+
+const TextLinks: FC<TextLinksProps> = ({ user_id }) => {
   const links = [
     { title: 'Автори', href: '/authors' },
     { title: 'Теги', href: '/tags' },
-    { title: 'Про мене', href: '/about_me' },
+    {
+      title: 'Мої пости',
+      href: user_id ? `/posts?author=${user_id}` : '/auth/login',
+    },
   ];
   return (
     <>

@@ -12,10 +12,19 @@ export class db {
   static async getProfile(id: string) {
     const { data, error } = await supabase
       .from<Profile>('profiles')
-      .select('username, avatar_url')
+      .select('*')
       .eq('id', id)
       .single();
+    if (error) throw error;
+    return data;
+  }
 
+  static async getAuthorPosts(author_id: string) {
+    const { data, error } = await supabase
+      .from<Post>('posts')
+      .select(`id, title, img_src, tag, profiles(id, avatar_url, username)`)
+      .eq('author_id', author_id)
+      .order('created_at', { ascending: false });
     if (error) throw error;
     return data;
   }

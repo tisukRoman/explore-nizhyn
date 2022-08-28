@@ -1,4 +1,4 @@
-//import type { definitions } from './generated-types';
+import type { definitions } from './generated-types';
 
 export type Profile = {
   id: string;
@@ -25,6 +25,7 @@ export type Comment = {
 
 export type Post = {
   id: number;
+  author_id?: number;
   created_at?: string;
   title?: string;
   img_src?: string;
