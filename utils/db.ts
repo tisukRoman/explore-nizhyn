@@ -6,6 +6,7 @@ import {
   Post,
   PostDetails,
   Comment,
+  Roles,
 } from './types';
 
 export class db {
@@ -15,6 +16,16 @@ export class db {
       .select('*')
       .eq('id', id)
       .single();
+    if (error) throw error;
+    return data;
+  }
+
+  static async getAuthorsList() {
+    const { data, error } = await supabase
+      .from<Profile>('profiles')
+      .select('*')
+      .in('role_id', [Roles.ADMIN, Roles.AUTHOR])
+      .order('role_id');
     if (error) throw error;
     return data;
   }

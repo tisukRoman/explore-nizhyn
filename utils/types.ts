@@ -1,5 +1,11 @@
 import type { definitions } from './generated-types';
 
+export enum Roles {
+  ADMIN = 1,
+  AUTHOR = 2,
+  READER = 3,
+}
+
 export type Profile = {
   id: string;
   username?: string;
