@@ -3,7 +3,7 @@ import React from 'react';
 
 const Footer = () => {
   return (
-    <footer className='w-full h-32 bg-[#000] relative'>
+    <footer className='mt-6 w-full h-32 bg-[#000] relative'>
       <Image
         src='/images/footer.jpg'
         alt='footer image'

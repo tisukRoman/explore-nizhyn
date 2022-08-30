@@ -18,7 +18,7 @@ const Login: NextPage = () => {
 
   return (
     <Layout>
-      <main className='pt-32 w-[80%] mx-auto text-center'>
+      <main className='pt-32 h-[90vh] w-[80%] mx-auto text-center'>
         <PageTitle>Увійдіть в акаунт</PageTitle>
         <LoginForm onSubmit={onSubmit} />
         <p className='text-white mt-6'>Не маєте акаунту? </p>

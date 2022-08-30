@@ -12,7 +12,7 @@ const PostCover: FC<{ post: PostDetails }> = ({ post }) => {
         layout='fill'
         className='h-full object-cover opacity-60'
       />
-      <div className='bg-black w-full h-full z-1 flex flex-col items-center justify-center absolute bg-opacity-60 shadow-2xl'>
+      <article className='bg-black w-full h-full z-1 flex flex-col items-center justify-center absolute bg-opacity-60 shadow-2xl'>
         <h3 className='text-white font-medium uppercase text-3xl hover-green text-center max-w-[80%] mx-auto'>
           {post.title}
         </h3>
@@ -20,10 +20,10 @@ const PostCover: FC<{ post: PostDetails }> = ({ post }) => {
           {post.tag}
         </p>
         <div className='bg-green w-10 my-3 h-1' />
-        <div className='text-slate-200 my-2 mx-auto text-center max-w-[80%] md:max-w-[40%]'>
+        <p className='text-slate-200 my-2 mx-auto text-center max-w-[80%] md:max-w-[40%]'>
           {post.description}
-        </div>
-      </div>
+        </p>
+      </article>
     </div>
   );
 };
