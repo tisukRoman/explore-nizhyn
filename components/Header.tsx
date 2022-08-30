@@ -8,30 +8,33 @@ import { BiUser } from 'react-icons/bi';
 import { FaChurch } from 'react-icons/fa';
 import { BiSearchAlt2 } from 'react-icons/bi';
 import { AiOutlineLogout } from 'react-icons/ai';
-import { useSession } from '../hooks/useSession';
+import { useAuth } from '../hooks/useAuth';
+import { useRouter } from 'next/router';
 
 const Header: FC = () => {
-  const session = useSession();
+  const router = useRouter();
+  const { user, signOut } = useAuth();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [profile, setProfile] = useState<Profile | null>(null);
 
   useEffect(() => {
     async function loadProfile() {
-      const profileId = session?.user?.id;
+      const profileId = user?.id;
       if (profileId) {
         const data = await db.getProfile(profileId);
         setProfile(data);
       }
     }
     loadProfile();
-  }, [session]);
+  }, [user]);
 
   const toggleMenu = () => {
     setIsOpen((s) => !s);
   };
 
   const onLogout = async () => {
-    await db.logout();
+    await signOut();
+    router.push('/');
   };
 
   return (

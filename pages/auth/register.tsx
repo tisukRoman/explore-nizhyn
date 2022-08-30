@@ -2,17 +2,17 @@ import Link from 'next/link';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { SignUpData } from '../../utils/types';
-import { db } from '../../utils/db';
+import { useAuth } from '../../hooks/useAuth';
 import Layout from '../../components/Layout';
 import PageTitle from '../../components/PageTitle';
 import RegisterForm from '../../components/RegisterForm';
 
 const Register: NextPage = () => {
   const router = useRouter();
+  const { signUp } = useAuth();
 
   const onSubmit = async (data: SignUpData) => {
-    const { user, session } = await db.signUp(data);
-    console.log(user, session);
+    await signUp(data);
     router.push('/');
   };
 

@@ -6,13 +6,14 @@ import { LoginData } from '../../utils/types';
 import Layout from '../../components/Layout';
 import LoginForm from '../../components/LoginForm';
 import PageTitle from '../../components/PageTitle';
+import { useAuth } from '../../hooks/useAuth';
 
 const Login: NextPage = () => {
   const router = useRouter();
+  const { signIn } = useAuth();
 
   const onSubmit = async (data: LoginData) => {
-    const user = await db.login(data);
-    console.log(user);
+    await signIn(data);
     router.push('/');
   };
 
