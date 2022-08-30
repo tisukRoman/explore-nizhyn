@@ -39,30 +39,42 @@ const Header: FC = () => {
       <nav className='max-w-[90%] xl:max-w-screen-xl lg:max-w-screen-lg md:max-w-screen-sm h-20 mx-auto flex items-center text-2xl'>
         <Link href='/'>
           <h1 className='grow'>
-            <a className='hover-green font-serif items-center flex'>
+            <a
+              title='Домашня сторінка'
+              className='hover-green font-serif items-center flex'
+            >
               Ніжин <FaChurch className='ml-5' />
             </a>
           </h1>
         </Link>
-        <div onClick={toggleMenu} className='hover-green lg:hidden'>
+        <div
+          onClick={toggleMenu}
+          title='Меню'
+          className='hover-green lg:hidden'
+        >
           <FiMenu />
         </div>
         <div className='hidden lg:flex'>
           <TextLinks />
         </div>
         <Link href='/'>
-          <a className='hover-green ml-5 md:ml-8'>
+          <a title='Шукати пост' className='hover-green ml-5 md:ml-8'>
             <BiSearchAlt2 />
           </a>
         </Link>
         {profile ? (
           <>
-            <div onClick={onLogout} className='hover-green ml-5 md:ml-8'>
+            <div
+              onClick={onLogout}
+              title='Вийти з акаунту'
+              className='hover-green ml-5 md:ml-8'
+            >
               <AiOutlineLogout />
             </div>
             <div className='ml-5 md:ml-8 overflow-hidden relative w-9 h-9 rounded-full'>
               <Image
                 unoptimized
+                title={profile.username}
                 src={
                   profile.avatar_url ? profile.avatar_url : '/images/user.png'
                 }
@@ -74,7 +86,7 @@ const Header: FC = () => {
           </>
         ) : (
           <Link href='/auth/login'>
-            <a className='hover-green ml-5 md:ml-8'>
+            <a title='Увійти' className='hover-green ml-5 md:ml-8'>
               <BiUser />
             </a>
           </Link>
