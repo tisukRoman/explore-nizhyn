@@ -17,6 +17,7 @@ const Layout: FC<LayoutProps> = (props) => {
     <>
       <Head>
         <title>{title}</title>
+        <meta charSet="utf-8" />
         <meta name='description' content={description} />
         <meta name='keywords' content={keywords} />
         <link rel='icon' type='image/x-icon' href='/favicon.ico' />
