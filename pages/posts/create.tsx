@@ -1,7 +1,8 @@
 import * as yup from 'yup';
 import { NextPage } from 'next';
+import { PostData } from '../../utils/types';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { EditorState } from 'draft-js';
+import { convertToRaw, EditorState } from 'draft-js';
 import { useForm } from 'react-hook-form';
 import { useRedirect } from '../../hooks/useRedirect';
 import { useAuth } from '../../hooks/useAuth';
@@ -9,14 +10,6 @@ import Layout from '../../components/Layout';
 import TextInput from '../../components/TextInput';
 import TextEditor from '../../components/TextEditor';
 import Button from '../../components/Button';
-
-type PostData = {
-  title: string;
-  tag: string;
-  img_src: string;
-  description?: string;
-  content: EditorState;
-};
 
 const schema = yup.object({
   title: yup.string().required(`Заголовок обов'язково`),
@@ -46,7 +39,9 @@ const CreatePost: NextPage = () => {
   });
 
   const onSubmit = (data: PostData) => {
-    console.log(data);
+    const currentContent = data.content.getCurrentContent();
+    const content = JSON.stringify(convertToRaw(currentContent));
+    console.log({ ...data, content });
   };
 
   return (

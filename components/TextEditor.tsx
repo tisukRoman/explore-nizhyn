@@ -1,21 +1,11 @@
 import 'draft-js/dist/Draft.css';
-import { FC } from 'react';
-import { Editor, EditorState } from 'draft-js';
 import { useController, UseControllerProps } from 'react-hook-form';
-
-type PostData = {
-  title: string;
-  tag: string;
-  img_src: string;
-  description?: string;
-  content: EditorState;
-};
+import { Editor, EditorState } from 'draft-js';
+import { PostData } from '../utils/types';
+import { FC } from 'react';
 
 const TextEditor: FC<UseControllerProps<PostData>> = (props) => {
-  const { field, fieldState } = useController(props);
-
-  console.log('content', field.value);
-  console.log('filedState: ', fieldState);
+  const { field } = useController(props);
 
   return (
     <div className='border-[1px] min-h-40 my-6 p-2 text-white border-white rounded-md border-opacity-60'>

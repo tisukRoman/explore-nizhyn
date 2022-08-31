@@ -1,3 +1,4 @@
+import { EditorState } from 'draft-js';
 import type { definitions } from './generated-types';
 
 export enum Roles {
@@ -58,6 +59,8 @@ export type PostDetails = {
   };
 };
 
+// Form data types
+
 export type SignUpData = {
   email: string;
   password: string;
@@ -68,4 +71,12 @@ export type SignUpData = {
 export type LoginData = {
   email: string;
   password: string;
+};
+
+export type PostData = {
+  title: string;
+  tag: string;
+  img_src: string;
+  description?: string;
+  content: EditorState;
 };
