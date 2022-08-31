@@ -1,34 +1,30 @@
 import 'draft-js/dist/Draft.css';
-import { Editor, EditorState, RichUtils } from 'draft-js';
-import { FC, useState } from 'react';
+import { FC } from 'react';
+import { Editor, EditorState } from 'draft-js';
+import { useController, UseControllerProps } from 'react-hook-form';
 
-const TextEditor: FC = () => {
-  const [editorState, setEditorState] = useState(() =>
-    EditorState.createEmpty()
-  );
+type PostData = {
+  title: string;
+  tag: string;
+  img_src: string;
+  description?: string;
+  content: EditorState;
+};
 
-  const onEditorChage = (editorState: EditorState) => {
-    setEditorState(editorState);
-  };
+const TextEditor: FC<UseControllerProps<PostData>> = (props) => {
+  const { field, fieldState } = useController(props);
 
-  const handleKeyCommand = (
-    command: Draft.DraftEditorCommand,
-    editorState: EditorState
-  ) => {
-    const newState = RichUtils.handleKeyCommand(editorState, command);
-    if (newState) {
-      onEditorChage(newState);
-      return 'handled';
-    }
-    return 'not-handled';
-  };
+  console.log('content', field.value);
+  console.log('filedState: ', fieldState);
 
   return (
-    <div>
+    <div className='border-[1px] min-h-40 my-6 p-2 text-white border-white rounded-md border-opacity-60'>
       <Editor
-        editorState={editorState}
-        onChange={setEditorState}
-        handleKeyCommand={handleKeyCommand}
+        editorState={field.value as EditorState}
+        onChange={field.onChange}
+        onBlur={field.onBlur}
+        ref={field.ref}
+        placeholder='Весь основний контент пишіть тут...'
       />
     </div>
   );
