@@ -1,12 +1,12 @@
 import Link from 'next/link';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { db } from '../../utils/db';
 import { LoginData } from '../../utils/types';
-import Layout from '../../components/Layout';
+import { useAuth } from '../../hooks/useAuth';
 import LoginForm from '../../components/LoginForm';
 import PageTitle from '../../components/PageTitle';
-import { useAuth } from '../../hooks/useAuth';
+import Layout from '../../components/Layout';
+import Toast from '../../components/Toast';
 
 const Login: NextPage = () => {
   const router = useRouter();

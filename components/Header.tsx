@@ -34,6 +34,7 @@ const Header: FC = () => {
 
   const onLogout = async () => {
     await signOut();
+    setProfile(null);
     router.push('/');
   };
 
@@ -97,27 +98,26 @@ const Header: FC = () => {
       </nav>
       <div
         className={`fixed top-20 left-0 bg-[#000] w-[90vw] md:max-w-screen-sm md:left-2/4 md:-translate-x-1/2 overflow-hidden transition-all ${
-          isOpen ? 'h-40' : 'h-0'
+          isOpen ? 'h-auto' : 'h-0'
         }`}
       >
-        <TextLinks user_id={profile?.id} />
+        <TextLinks />
       </div>
     </header>
   );
 };
 
-type TextLinksProps = {
-  user_id?: string;
-};
+const TextLinks: FC = () => {
+  const { user } = useAuth();
 
-const TextLinks: FC<TextLinksProps> = ({ user_id }) => {
   const links = [
     { title: 'Автори', href: '/authors' },
     { title: 'Теги', href: '/tags' },
     {
       title: 'Мої пости',
-      href: user_id ? `/posts?author=${user_id}` : '/auth/login',
+      href: user ? `/posts?author=${user.id}` : '/auth/login',
     },
+    { title: 'Створити пост', href: user ? `/posts/create` : '/auth/login' },
   ];
   return (
     <>
