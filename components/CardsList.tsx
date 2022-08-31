@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Post } from '../utils/types';
+import { Post } from '@utils/types';
 import Card from './Card';
 
 type CardsListProps = {

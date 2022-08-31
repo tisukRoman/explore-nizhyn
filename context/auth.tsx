@@ -1,7 +1,7 @@
 import { createContext, FC, ReactNode, useEffect, useState } from 'react';
+import { supabase } from '@utils/supabaseClient';
 import { User } from '@supabase/supabase-js';
-import { supabase } from '../utils/supabaseClient';
-import { db } from '../utils/db';
+import { db } from '@utils/db';
 
 type AuthContextType = {
   signUp: typeof db.signUp; 

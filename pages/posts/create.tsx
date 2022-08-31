@@ -1,15 +1,15 @@
 import * as yup from 'yup';
 import { NextPage } from 'next';
-import { PostData } from '../../utils/types';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { convertToRaw, EditorState } from 'draft-js';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
-import { useRedirect } from '../../hooks/useRedirect';
-import { useAuth } from '../../hooks/useAuth';
-import Layout from '../../components/Layout';
-import TextInput from '../../components/TextInput';
-import TextEditor from '../../components/TextEditor';
-import Button from '../../components/Button';
+import { PostData } from '@utils/types';
+import { useRedirect } from '@hooks/useRedirect';
+import { useAuth } from '@hooks/useAuth';
+import Layout from '@components/Layout';
+import TextInput from '@components/TextInput';
+import TextEditor from '@components/TextEditor';
+import Button from '@components/Button';
 
 const schema = yup.object({
   title: yup.string().required(`Заголовок обов'язково`),

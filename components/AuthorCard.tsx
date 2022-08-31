@@ -1,7 +1,7 @@
-import { FC } from 'react';
 import Image from 'next/image';
+import { FC } from 'react';
 import { FaMapMarker } from 'react-icons/fa';
-import { Profile } from '../utils/types';
+import { Profile } from '@utils/types';
 
 const AuthorCard: FC<{ author: Profile }> = ({ author }) => {
   return (

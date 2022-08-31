@@ -1,8 +1,8 @@
 import type { GetServerSideProps, NextPage } from 'next';
-import CardsList from '../../components/CardsList';
-import Layout from '../../components/Layout';
-import { Post } from '../../utils/types';
-import { db } from '../../utils/db';
+import CardsList from '@components/CardsList';
+import Layout from '@components/Layout';
+import { Post } from '@utils/types';
+import { db } from '@utils/db';
 
 type PostsProps = {
   posts: Post[];

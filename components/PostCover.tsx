@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import Image from 'next/image';
-import { PostDetails } from '../utils/types';
+import { PostDetails } from '@utils/types';
 
 const PostCover: FC<{ post: PostDetails }> = ({ post }) => {
   return (

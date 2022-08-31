@@ -1,9 +1,9 @@
-import { FC } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Post } from '../utils/types';
+import { FC } from 'react';
 import { BiLink } from 'react-icons/bi';
-import { baseURL } from '../config/baseURL';
+import { baseURL } from '@config/baseURL';
+import { Post } from '@utils/types';
 
 type CardProps = {
   post: Post;

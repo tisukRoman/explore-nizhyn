@@ -1,8 +1,8 @@
 import type { GetStaticProps, NextPage } from 'next';
-import { Post } from '../utils/types';
-import { db } from '../utils/db';
-import Layout from '../components/Layout';
-import CardsList from '../components/CardsList';
+import { Post } from '@utils/types';
+import { db } from '@utils/db';
+import Layout from '@components/Layout';
+import CardsList from '@components/CardsList';
 
 type HomeProps = {
   posts: Post[];

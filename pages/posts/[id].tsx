@@ -1,9 +1,9 @@
 import { GetServerSideProps, NextPage } from 'next';
-import { Comment, PostDetails } from '../../utils/types';
-import { db } from '../../utils/db';
-import Layout from '../../components/Layout';
-import PostCover from '../../components/PostCover';
-import CommentList from '../../components/CommentList';
+import { Comment, PostDetails } from '@utils/types';
+import CommentList from '@components/CommentList';
+import PostCover from '@components/PostCover';
+import Layout from '@components/Layout';
+import { db } from '@utils/db';
 
 type PostDetailsProps = {
   post: PostDetails;

@@ -1,15 +1,15 @@
 import { FC, useEffect, useState } from 'react';
-import Link from 'next/link';
+import { useRouter } from 'next/router';
 import Image from 'next/image';
-import { db } from '../utils/db';
-import { Profile } from '../utils/types';
+import Link from 'next/link';
+import { db } from '@utils/db';
+import { Profile } from '@utils/types';
+import { useAuth } from '@hooks/useAuth';
 import { FiMenu } from 'react-icons/fi';
 import { BiUser } from 'react-icons/bi';
 import { FaChurch } from 'react-icons/fa';
 import { BiSearchAlt2 } from 'react-icons/bi';
 import { AiOutlineLogout } from 'react-icons/ai';
-import { useAuth } from '../hooks/useAuth';
-import { useRouter } from 'next/router';
 
 const Header: FC = () => {
   const router = useRouter();

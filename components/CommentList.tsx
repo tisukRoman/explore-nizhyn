@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { FC } from 'react';
-import { Comment } from '../utils/types';
+import { Comment } from '@utils/types';
 
 type CommentListProps = {
   comments: Comment[];

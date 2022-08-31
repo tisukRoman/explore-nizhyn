@@ -1,8 +1,8 @@
 import type { GetStaticProps, NextPage } from 'next';
-import { Profile } from '../../utils/types';
-import { db } from '../../utils/db';
-import Layout from '../../components/Layout';
-import AuthorCard from '../../components/AuthorCard';
+import { Profile } from '@utils/types';
+import { db } from '@utils/db';
+import Layout from '@components/Layout';
+import AuthorCard from '@components/AuthorCard';
 
 type AuthorsProps = {
   authors: Profile[];

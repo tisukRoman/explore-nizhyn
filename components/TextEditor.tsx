@@ -1,8 +1,8 @@
 import 'draft-js/dist/Draft.css';
+import { FC } from 'react';
 import { useController, UseControllerProps } from 'react-hook-form';
 import { Editor, EditorState } from 'draft-js';
-import { PostData } from '../utils/types';
-import { FC } from 'react';
+import { PostData } from '@utils/types';
 
 const TextEditor: FC<UseControllerProps<PostData>> = (props) => {
   const { field } = useController(props);
