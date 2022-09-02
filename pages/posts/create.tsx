@@ -1,15 +1,18 @@
 import * as yup from 'yup';
+import dynamic from 'next/dynamic';
 import { NextPage } from 'next';
 import { convertToRaw, EditorState } from 'draft-js';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { PostData } from '@utils/types';
 import { useRedirect } from '@hooks/useRedirect';
 import { useAuth } from '@hooks/useAuth';
-import Layout from '@components/Layout';
 import TextInput from '@components/TextInput';
-import TextEditor from '@components/TextEditor';
+import Layout from '@components/Layout';
 import Button from '@components/Button';
+const TextEditor = dynamic(() => import('@components/TextEditor'), {
+  ssr: false,
+});
 
 const schema = yup.object({
   title: yup.string().required(`Заголовок обов'язково`),
