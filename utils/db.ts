@@ -2,11 +2,11 @@ import { supabase } from './supabaseClient';
 import {
   SignUpData,
   LoginData,
-  Profile,
   Post,
-  PostDetails,
   Comment,
   Roles,
+  Profile,
+  PostData,
 } from './types';
 
 export class db {
@@ -51,7 +51,7 @@ export class db {
 
   static async getPostDetails(post_id: number) {
     const { data, error } = await supabase
-      .from<PostDetails>('posts')
+      .from<Post>('posts')
       .select('*, profiles(id, avatar_url, username)')
       .eq('id', post_id)
       .single();
@@ -64,6 +64,12 @@ export class db {
       .from<Comment>('comments')
       .select('*, profiles(id, username, avatar_url)')
       .eq('post_id', post_id);
+    if (error) throw error;
+    return data;
+  }
+
+  static async createPost(postData: PostData) {
+    const { data, error } = await supabase.from('posts').insert([postData]);
     if (error) throw error;
     return data;
   }

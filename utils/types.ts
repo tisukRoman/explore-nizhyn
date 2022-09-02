@@ -1,4 +1,3 @@
-import { EditorState } from 'draft-js';
 import type { definitions } from './generated-types';
 
 export enum Roles {
@@ -7,56 +6,21 @@ export enum Roles {
   READER = 3,
 }
 
-export type Profile = {
-  id: string;
-  username?: string;
-  avatar_url?: string;
-  location?: string;
-  about?: string;
-  wallpaper_url?: string;
-  role_id?: number;
+export type PostTable = definitions['posts'];
+export type ProfileTable = definitions['profiles'];
+export type CommentTable = definitions['comments'];
+export type RolesTable = definitions['roles'];
+
+export type Profile = ProfileTable & {
+  roles: RolesTable;
 };
 
-export type Comment = {
-  id: number;
-  created_at?: string;
-  post_id?: number;
-  user_id?: string;
-  text?: string;
-  profiles: {
-    id: string;
-    username?: string;
-    avatar_url?: string;
-  };
+export type Comment = CommentTable & {
+  profiles: Profile;
 };
 
-export type Post = {
-  id: number;
-  author_id?: number;
-  created_at?: string;
-  title?: string;
-  img_src?: string;
-  tag?: string;
-  profiles: {
-    id: string;
-    username?: string;
-    avatar_url?: string;
-  };
-};
-
-export type PostDetails = {
-  id: number;
-  created_at?: string;
-  title?: string;
-  description?: string;
-  content?: string;
-  img_src?: string;
-  tag?: string;
-  profiles: {
-    id: string;
-    username?: string;
-    avatar_url?: string;
-  };
+export type Post = PostTable & {
+  profiles: Profile;
 };
 
 // Form data types
@@ -73,10 +37,4 @@ export type LoginData = {
   password: string;
 };
 
-export type PostData = {
-  title: string;
-  tag: string;
-  img_src: string;
-  description?: string;
-  content: EditorState;
-};
+export type PostData = Omit<PostTable, 'id' | 'created_at'>;

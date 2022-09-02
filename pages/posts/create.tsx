@@ -4,12 +4,12 @@ import { NextPage } from 'next';
 import { convertToRaw, EditorState } from 'draft-js';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { PostData } from '@utils/types';
 import { useRedirect } from '@hooks/useRedirect';
 import { useAuth } from '@hooks/useAuth';
 import TextInput from '@components/TextInput';
 import Layout from '@components/Layout';
 import Button from '@components/Button';
+import { db } from '@utils/db';
 const TextEditor = dynamic(() => import('@components/TextEditor'), {
   ssr: false,
 });
@@ -24,6 +24,14 @@ const schema = yup.object({
   description: yup.string(),
 });
 
+type PostForm = {
+  title?: string | undefined;
+  description?: string | undefined;
+  img_src?: string | undefined;
+  tag?: string | undefined;
+  content?: EditorState;
+};
+
 const CreatePost: NextPage = () => {
   const { user } = useAuth();
   useRedirect(user);
@@ -33,7 +41,7 @@ const CreatePost: NextPage = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<PostData>({
+  } = useForm<PostForm>({
     resolver: yupResolver(schema),
     mode: 'onChange',
     defaultValues: {
@@ -41,10 +49,17 @@ const CreatePost: NextPage = () => {
     },
   });
 
-  const onSubmit = (data: PostData) => {
-    const currentContent = data.content.getCurrentContent();
-    const content = JSON.stringify(convertToRaw(currentContent));
-    console.log({ ...data, content });
+  const onSubmit = async (data: PostForm) => {
+    if (data.content && user?.id) {
+      const currentContent = data.content.getCurrentContent();
+      const content = JSON.stringify(convertToRaw(currentContent));
+      const post = await db.createPost({
+        ...data,
+        content,
+        author_id: user.id,
+      });
+      console.log(post);
+    }
   };
 
   return (
