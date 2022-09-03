@@ -4,9 +4,9 @@ import { FC } from 'react';
 import { useController, UseControllerProps } from 'react-hook-form';
 import { Editor } from 'react-draft-wysiwyg';
 import { EditorState } from 'draft-js';
-import { PostData } from '@utils/types';
+import { PostForm } from '@utils/types';
 
-const TextEditor: FC<UseControllerProps<PostData>> = (props) => {
+const TextEditor: FC<UseControllerProps<PostForm>> = (props) => {
   const { field } = useController(props);
 
   return (
