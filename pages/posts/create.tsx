@@ -13,6 +13,7 @@ import Button from '@components/Button';
 import { PostForm } from '@utils/types';
 import { db } from '@utils/db';
 import { useRouter } from 'next/router';
+import PageTitle from '@components/PageTitle';
 const TextEditor = dynamic(() => import('@components/TextEditor'), {
   ssr: false,
 });
@@ -60,7 +61,10 @@ const CreatePost: NextPage = () => {
 
   return (
     <Layout>
-      <div className='pt-20 min-h-screen w-[90%] mx-auto p-6'>
+      <div className='pt-20 min-h-screen w-[90%] mx-auto p-6 md:max-w-screen-lg'>
+        <div className='my-6'>
+          <PageTitle>Створити Пост</PageTitle>
+        </div>
         <form onSubmit={handleSubmit(onSubmit)}>
           <TextInput
             type='text'
