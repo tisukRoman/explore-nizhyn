@@ -1,8 +1,6 @@
 import * as yup from 'yup';
-import dynamic from 'next/dynamic';
 import { NextPage } from 'next';
-import { convertToRaw, EditorState } from 'draft-js';
-import draftToHtml from 'draftjs-to-html';
+import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRedirect } from '@hooks/useRedirect';
@@ -10,13 +8,10 @@ import { useAuth } from '@hooks/useAuth';
 import TextInput from '@components/TextInput';
 import Layout from '@components/Layout';
 import Button from '@components/Button';
-import { PostForm } from '@utils/types';
-import { db } from '@utils/db';
-import { useRouter } from 'next/router';
 import PageTitle from '@components/PageTitle';
-const TextEditor = dynamic(() => import('@components/TextEditor'), {
-  ssr: false,
-});
+import TextEditor from '@components/TextEditor';
+import { PostData } from '@utils/types';
+import { db } from '@utils/db';
 
 const schema = yup.object({
   title: yup.string().required(`Заголовок обов'язково`),
@@ -38,23 +33,14 @@ const CreatePost: NextPage = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<PostForm>({
+  } = useForm<PostData>({
     resolver: yupResolver(schema),
     mode: 'onChange',
-    defaultValues: {
-      content: EditorState.createEmpty(),
-    },
   });
 
-  const onSubmit = async (data: PostForm) => {
+  const onSubmit = async (data: PostData) => {
     if (data.content && user?.id) {
-      const currentContent = data.content.getCurrentContent();
-      const content = JSON.stringify(draftToHtml(convertToRaw(currentContent)));
-      await db.createPost({
-        ...data,
-        content,
-        author_id: user.id,
-      });
+      await db.createPost({...data, author_id: user.id});
       router.push('/');
     }
   };

@@ -1,10 +1,10 @@
 import { GetServerSideProps, NextPage } from 'next';
 import { Comment, Post } from '@utils/types';
-import parseHtml from 'html-react-parser';
+import { db } from '@utils/db';
 import CommentList from '@components/CommentList';
 import PostCover from '@components/PostCover';
 import Layout from '@components/Layout';
-import { db } from '@utils/db';
+import TextViewer from '@components/TextViewer';
 
 type PostDetailsProps = {
   post: Post;
@@ -16,10 +16,10 @@ const PostDetails: NextPage<PostDetailsProps> = ({ post, comments }) => {
     <Layout>
       <main className='pt-20 mx-auto lg:max-w-screen-lg shadow-xl shadow-[#1a1a1a]'>
         <PostCover post={post} />
-        <article className='text-slate-300 text-lg px-8 py-12 font-mono md:text-2xl'>
-          <p className='leading-8 md:leading-10'>
-            {parseHtml(JSON.parse(post.content as string))}
-          </p>
+        <article className='text-slate-200 p-6'>
+          <TextViewer>
+            {post.content ? post.content : <p>No content...</p>}
+          </TextViewer>
         </article>
         <CommentList comments={comments} />
       </main>

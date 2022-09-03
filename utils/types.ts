@@ -1,5 +1,4 @@
 import type { definitions } from './generated-types';
-import { EditorState } from 'draft-js';
 
 export enum Roles {
   ADMIN = 1,
@@ -39,11 +38,3 @@ export type LoginData = {
 };
 
 export type PostData = Omit<PostTable, 'id' | 'created_at'>;
-
-export type PostForm = {
-  title?: string | undefined;
-  description?: string | undefined;
-  img_src?: string | undefined;
-  tag?: string | undefined;
-  content?: EditorState;
-};

@@ -1,27 +1,62 @@
 import { FC } from 'react';
+import dynamic from 'next/dynamic';
 import { useController, UseControllerProps } from 'react-hook-form';
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import { Editor } from 'react-draft-wysiwyg';
-import { EditorState } from 'draft-js';
-import { PostForm } from '@utils/types';
+import { PostData } from '@utils/types';
+import 'react-quill/dist/quill.snow.css';
+const QuillNoSSRWrapper = dynamic(import('react-quill'), {
+  ssr: false,
+  loading: () => <p>Loading ...</p>,
+});
 
-const TextEditor: FC<UseControllerProps<PostForm>> = (props) => {
+const TextEditor: FC<UseControllerProps<PostData>> = (props) => {
   const { field } = useController(props);
 
   return (
     <div className='mt-6 p-2'>
-      <h4 className='text-slate-200 font-semibold text-lg'>Контент:</h4>
-      <Editor
-        wrapperClassName='my-6 text-white border-white rounded-md border-opacity-60-white'
-        editorClassName='pl-2'
-        toolbarClassName='toolbar-class'
-        editorState={field.value as EditorState}
-        onEditorStateChange={field.onChange}
-        ref={field.ref}
-        placeholder='Весь основний контент пишіть тут...'
+      <h4 className='mb-4 text-slate-200 font-semibold text-lg'>Контент:</h4>
+      <QuillNoSSRWrapper
+        className='text-slate-200'
+        modules={modules}
+        formats={formats}
+        theme='snow'
+        onChange={field.onChange}
       />
     </div>
   );
 };
+
+const modules = {
+  toolbar: [
+    [{ header: '1' }, { header: '2' }, { font: [] }],
+    [{ size: [] }],
+    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+    [
+      { list: 'ordered' },
+      { list: 'bullet' },
+      { indent: '-1' },
+      { indent: '+1' },
+    ],
+    ['link', 'video'],
+  ],
+  clipboard: {
+    matchVisual: false,
+  },
+};
+
+const formats = [
+  'header',
+  'font',
+  'size',
+  'bold',
+  'italic',
+  'underline',
+  'strike',
+  'blockquote',
+  'list',
+  'bullet',
+  'indent',
+  'link',
+  'video',
+];
 
 export default TextEditor;
