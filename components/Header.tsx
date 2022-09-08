@@ -115,7 +115,7 @@ const TextLinks: FC = () => {
     { title: 'Теги', href: '/tags' },
     {
       title: 'Мої пости',
-      href: user ? `/posts?author=${user.id}` : '/auth/login',
+      href: user ? `/authors/${user.id}` : '/auth/login',
     },
     { title: 'Створити пост', href: user ? `/posts/create` : '/auth/login' },
   ];

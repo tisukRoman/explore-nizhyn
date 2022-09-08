@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import Image from 'next/image';
-import { PostDetails } from '@utils/types';
+import { Post } from '@utils/types';
 
-const PostCover: FC<{ post: PostDetails }> = ({ post }) => {
+const PostCover: FC<{ post: Post }> = ({ post }) => {
   return (
     <div className='w-full h-128 bg-[#000] relative'>
       <Image

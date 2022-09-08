@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import { FC } from 'react';
 import { FaMapMarker } from 'react-icons/fa';
 import { Profile } from '@utils/types';
@@ -25,9 +26,11 @@ const AuthorCard: FC<{ author: Profile }> = ({ author }) => {
             className='object-cover'
           />
         </div>
-        <h3 className='mt-6 text-white text-2xl uppercase font-extrabold'>
-          {author.username}
-        </h3>
+        <Link href={`/authors/${author.id}`}>
+          <h3 className='mt-6 text-white text-2xl uppercase font-extrabold hover-green'>
+            {author.username}
+          </h3>
+        </Link>
         <address className='mt-6 p-1 bg-[#000] w-full text-white opacity-70 text-xs text-center flex justify-center'>
           <FaMapMarker />
           <span className='ml-2'>
