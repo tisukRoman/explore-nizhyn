@@ -20,9 +20,9 @@ const AuthorCover: FC<AuthorCoverProps> = ({ profile }) => {
         layout='fill'
         className='h-full object-cover opacity-60'
       />
-      <article className='flex justify-center items-center pt-32 absolute w-full flex-col md:flex-row md:pt-40'>
+      <article className='w-[90%] md:w-[70%] left-1/2 -translate-x-1/2 flex justify-between items-center pt-32 absolute flex-col lg:mx-auto lg:flex-row lg:pt-40'>
         <div className='flex justify-center items-center'>
-          <div className='w-40 h-40 relative rounded-full overflow-hidden'>
+          <div className='w-32 h-32 relative rounded-full overflow-hidden'>
             <Image
               unoptimized
               src={profile.avatar_url ? profile.avatar_url : '/images/user.png'}
@@ -36,7 +36,9 @@ const AuthorCover: FC<AuthorCoverProps> = ({ profile }) => {
             <address>{profile.location || 'Локацію не вказано'}</address>
           </div>
         </div>
-        <div className='w-[90%] md:w-96 text-white mt-8 text-center md:ml-20 md:mt-0'>{profile.about} System Engineering student. 19 years old. I love open source projects, coffee, Age of Empires... Did I say coffee already?</div>
+        <div className='w-[90%] lg:w-96 text-white mt-8 text-center lg:mt-0'>
+          {profile.about}
+        </div>
       </article>
     </div>
   );
