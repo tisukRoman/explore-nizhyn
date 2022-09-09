@@ -21,7 +21,7 @@ const AuthorCover: FC<AuthorCoverProps> = ({ profile }) => {
         layout='fill'
         className='h-full object-cover opacity-60 '
       />
-      <article className='w-[90%] md:w-[70%] left-1/2 -translate-x-1/2 flex justify-between items-center pt-32 absolute flex-col lg:mx-auto lg:flex-row lg:pt-40'>
+      <article className='w-[90%] md:w-[50%] left-1/2 -translate-x-1/2 flex justify-between items-center pt-32 absolute flex-col lg:mx-auto lg:flex-row lg:pt-40'>
         <motion.div
           initial={{ opacity: 0, translateX: -50 }}
           animate={{ opacity: 1, translateX: 0 }}

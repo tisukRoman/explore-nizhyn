@@ -17,7 +17,7 @@ const PostCover: FC<{ post: Post }> = ({ post }) => {
         <motion.h3
           initial={{ opacity: 0, translateX: -50 }}
           animate={{ opacity: 1, translateX: 0 }}
-          transition={{ duration: 0.3 }}
+          transition={{ duration: 0.3, delay: 0.2 }}
           className='text-white font-medium uppercase text-3xl hover-green text-center max-w-[80%] mx-auto'
         >
           {post.title}
@@ -25,7 +25,7 @@ const PostCover: FC<{ post: Post }> = ({ post }) => {
         <motion.p
           initial={{ opacity: 0, translateX: -50 }}
           animate={{ opacity: 1, translateX: 0 }}
-          transition={{ duration: 0.3, delay: 0.3 }}
+          transition={{ duration: 0.3, delay: 0.5 }}
           className='text-slate-200 text-base mt-4 mb-2 uppercase hover-green'
         >
           {post.tag}
@@ -34,7 +34,7 @@ const PostCover: FC<{ post: Post }> = ({ post }) => {
         <motion.p
           initial={{ opacity: 0, translateY: 50 }}
           animate={{ opacity: 1, translateY: 0 }}
-          transition={{ duration: 0.5, delay: 0.6 }}
+          transition={{ duration: 0.5, delay: 0.8 }}
           className='text-slate-200 my-2 mx-auto text-center max-w-[80%] md:max-w-[40%]'
         >
           {post.description}

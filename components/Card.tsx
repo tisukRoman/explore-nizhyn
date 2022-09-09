@@ -18,9 +18,9 @@ const Card: FC<CardProps> = ({ post, index }) => {
 
   return (
     <motion.div
-      initial={{ opacity: 0, translateX: -30, translateY: -30 }}
-      animate={{ opacity: 1, translateX: 0, translateY: 0 }}
-      transition={{ duration: 0.3, delay: index * 0.2 }}
+      initial={{ opacity: 0, translateX: -20 }}
+      animate={{ opacity: 1, translateX: 0 }}
+      transition={{ duration: 0.3, delay: index * 0.1 }}
       className='h-128 w-full bg-gray-200 overflow-hidden relative group lg:first:col-span-2'
     >
       <Image
