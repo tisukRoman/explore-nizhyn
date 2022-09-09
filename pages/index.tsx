@@ -1,4 +1,4 @@
-import type { GetStaticProps, NextPage } from 'next';
+import type { GetServerSideProps, NextPage } from 'next';
 import { Post } from '@utils/types';
 import { db } from '@utils/db';
 import Layout from '@components/Layout';
@@ -18,8 +18,20 @@ const Home: NextPage<HomeProps> = ({ posts }) => {
   );
 };
 
-export const getStaticProps: GetStaticProps = async () => {
-  const posts = await db.getPostList();
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const searchQuery = ctx.query.q;
+
+  let posts: Post[] = [];
+
+  if (searchQuery) {
+    posts = await db.getSearchedPostList(searchQuery as string);
+  } else {
+    posts = await db.getPostList();
+  }
+
+  console.log(searchQuery);
+  
+
   return {
     props: { posts },
   };

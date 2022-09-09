@@ -49,6 +49,18 @@ export class db {
     return data;
   }
 
+  static async getSearchedPostList(query: string) {
+    const { data, error } = await supabase
+      .from<Post>('posts')
+      .select(`id, title, img_src, tag, profiles(id, avatar_url, username)`)
+      .ilike('title', `%${query}%`)
+      .ilike('tag', `%${query}%`)
+      .ilike('content', `%${query}%`)
+      .order('created_at', { ascending: false });
+    if (error) throw error;
+    return data;
+  }
+
   static async getPostDetails(post_id: number) {
     const { data, error } = await supabase
       .from<Post>('posts')
