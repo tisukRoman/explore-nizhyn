@@ -13,8 +13,8 @@ const Authors: NextPage<AuthorsProps> = ({ authors }) => {
     <Layout>
       <main className='pt-16 min-h-screen'>
         <div className='p-6 grid grid-cols-1 md:grid-cols-2 gap-y-10 gap-x-8 max-w-screen-lg mx-auto'>
-          {authors.map((author) => (
-            <AuthorCard key={author.id} author={author} />
+          {authors.map((author, i) => (
+            <AuthorCard key={author.id} author={author} index={i} />
           ))}
         </div>
       </main>

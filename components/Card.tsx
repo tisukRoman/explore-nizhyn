@@ -4,18 +4,25 @@ import { FC } from 'react';
 import { BiLink } from 'react-icons/bi';
 import { baseURL } from '@config/baseURL';
 import { Post } from '@utils/types';
+import { motion } from 'framer-motion';
 
 type CardProps = {
   post: Post;
+  index: number;
 };
 
-const Card: FC<CardProps> = ({ post }) => {
+const Card: FC<CardProps> = ({ post, index }) => {
   const onCopyLink = () => {
     window.navigator.clipboard.writeText(`${baseURL}/posts/${post.id}`);
   };
 
   return (
-    <div className='h-128 w-full bg-gray-200 overflow-hidden relative group lg:first:col-span-2'>
+    <motion.div
+      initial={{ opacity: 0, translateX: -30, translateY: -30 }}
+      animate={{ opacity: 1, translateX: 0, translateY: 0 }}
+      transition={{ duration: 0.3, delay: index * 0.2 }}
+      className='h-128 w-full bg-gray-200 overflow-hidden relative group lg:first:col-span-2'
+    >
       <Image
         unoptimized
         src={post.img_src || '/images/placeholder.png'}
@@ -60,7 +67,7 @@ const Card: FC<CardProps> = ({ post }) => {
       >
         <BiLink />
       </div>
-    </div>
+    </motion.div>
   );
 };
 

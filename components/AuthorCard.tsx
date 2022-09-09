@@ -3,10 +3,18 @@ import Link from 'next/link';
 import { FC } from 'react';
 import { FaMapMarker } from 'react-icons/fa';
 import { Profile } from '@utils/types';
+import { motion } from 'framer-motion';
 
-const AuthorCard: FC<{ author: Profile }> = ({ author }) => {
+type AuthorCardProps = { author: Profile; index: number };
+
+const AuthorCard: FC<AuthorCardProps> = ({ author, index }) => {
   return (
-    <div className='w-full h-96 relative'>
+    <motion.div
+      initial={{ opacity: 0, translateX: -30, translateY: -30 }}
+      animate={{ opacity: 1, translateX: 0, translateY: 0 }}
+      transition={{ duration: 0.3, delay: index * 0.2 }}
+      className='w-full h-96 relative'
+    >
       {author.wallpaper_url && (
         <Image
           unoptimized
@@ -41,7 +49,7 @@ const AuthorCard: FC<{ author: Profile }> = ({ author }) => {
           {author.about}
         </p>
       </article>
-    </div>
+    </motion.div>
   );
 };
 
