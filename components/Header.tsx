@@ -42,7 +42,7 @@ const Header: FC = () => {
 
   const renderMobileModal = () => {
     if (mobileModal) {
-      return <HeaderMobileModal />;
+      return <HeaderMobileModal onClose={() => toggleMobileModal(false)} />;
     }
   };
 
@@ -53,6 +53,7 @@ const Header: FC = () => {
           searchValue={searchValue}
           onSearchChange={onSearchChange}
           onSearch={onSearch}
+          onClose={() => toggleSearchModal(false)}
         />
       );
     }
@@ -62,11 +63,11 @@ const Header: FC = () => {
     setSearchValue((e.target as HTMLInputElement).value);
   };
 
-  const onSearch = () => {
-    if (searchValue) {
+  const onSearch = (e: Event) => {
+    if ((e as KeyboardEvent).key === 'Enter' || e.type === 'click') {
+      toggleSearchModal(false);
       router.push(`/?q=${searchValue}`);
     }
-    toggleSearchModal(false);
   };
 
   return (

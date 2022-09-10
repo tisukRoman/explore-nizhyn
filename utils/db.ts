@@ -53,9 +53,7 @@ export class db {
     const { data, error } = await supabase
       .from<Post>('posts')
       .select(`id, title, img_src, tag, profiles(id, avatar_url, username)`)
-      .ilike('title', `%${query}%`)
-      .ilike('tag', `%${query}%`)
-      .ilike('content', `%${query}%`)
+      .or(`or(title.ilike.%${query}%, tag.ilike.%${query}%), description.ilike.%${query}%`)
       .order('created_at', { ascending: false });
     if (error) throw error;
     return data;
