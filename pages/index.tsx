@@ -29,9 +29,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     posts = await db.getPostList();
   }
 
-  console.log(searchQuery);
-  
-
   return {
     props: { posts },
   };
