@@ -112,7 +112,6 @@ const TextLinks: FC = () => {
 
   const links = [
     { title: 'Автори', href: '/authors' },
-    { title: 'Теги', href: '/tags' },
     {
       title: 'Мої пости',
       href: user ? `/authors/${user.id}` : '/auth/login',
