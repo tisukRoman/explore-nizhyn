@@ -1,8 +1,9 @@
+import { FC } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import { useAuth } from '@hooks/useAuth';
 import { motion } from 'framer-motion';
-import { FC } from 'react';
 import { BiLink } from 'react-icons/bi';
 import { AiOutlineDelete, AiOutlineEdit } from 'react-icons/ai';
 import { baseURL } from '@config/baseURL';
@@ -16,6 +17,7 @@ type CardProps = {
 
 const Card: FC<CardProps> = ({ post, index }) => {
   const router = useRouter();
+  const { user } = useAuth();
 
   const onCopyLink = () => {
     window.navigator.clipboard.writeText(`${baseURL}/posts/${post.id}`);
@@ -27,14 +29,21 @@ const Card: FC<CardProps> = ({ post, index }) => {
 
   const onDeletePost = async () => {
     await db.deletePost(post.id);
-    router.push(`/authors/${post.profiles.id}`)
-  }
+    router.push(`/authors/${post.profiles.id}`);
+  };
 
   const buttons = [
     { onClick: onCopyLink, title: 'Копіювати посилання', icon: <BiLink /> },
     { onClick: onEditPost, title: 'Редагувати Пост', icon: <AiOutlineEdit /> },
-    { onClick: onDeletePost, title: 'Видалити пост', icon: <AiOutlineDelete/> }
+    {
+      onClick: onDeletePost,
+      title: 'Видалити пост',
+      icon: <AiOutlineDelete />,
+    },
   ];
+
+  const buttonsToRender =
+    user?.id === post.profiles.id ? buttons : [buttons[0]];
 
   return (
     <motion.div
@@ -81,7 +90,7 @@ const Card: FC<CardProps> = ({ post, index }) => {
         </div>
       </div>
       <div className='absolute top-4 right-4 flex justify-center items-center cursor-pointer text-3xl lg:opacity-0 lg:-translate-y-10 group-hover:opacity-60 group-hover:translate-y-0 transition-all duration-700'>
-        {buttons.map((button) => (
+        {buttonsToRender.map((button) => (
           <div
             key={button.title}
             onClick={button.onClick}
