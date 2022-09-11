@@ -20,6 +20,7 @@ const TextEditor: FC<UseControllerProps<PostData>> = (props) => {
         formats={formats}
         theme='snow'
         onChange={field.onChange}
+        defaultValue={field.value}
       />
     </div>
   );

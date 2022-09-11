@@ -30,11 +30,11 @@ export class db {
     return data;
   }
 
-  static async getAuthorPosts(author_id: string) {
+  static async getAuthorPosts(authorId: string) {
     const { data, error } = await supabase
       .from<Post>('posts')
       .select(`id, title, img_src, tag, profiles(id, avatar_url, username)`)
-      .eq('author_id', author_id)
+      .eq('author_id', authorId)
       .order('created_at', { ascending: false });
     if (error) throw error;
     return data;
@@ -53,33 +53,43 @@ export class db {
     const { data, error } = await supabase
       .from<Post>('posts')
       .select(`id, title, img_src, tag, profiles(id, avatar_url, username)`)
-      .or(`or(title.ilike.%${query}%, tag.ilike.%${query}%), description.ilike.%${query}%`)
+      .or(
+        `or(title.ilike.%${query}%, tag.ilike.%${query}%), description.ilike.%${query}%`
+      )
       .order('created_at', { ascending: false });
     if (error) throw error;
     return data;
   }
 
-  static async getPostDetails(post_id: number) {
+  static async getPostDetails(postId: number) {
     const { data, error } = await supabase
       .from<Post>('posts')
       .select('*, profiles(id, avatar_url, username)')
-      .eq('id', post_id)
+      .eq('id', postId)
       .single();
     if (error) throw error;
     return data;
   }
 
-  static async getPostComments(post_id: number) {
+  static async getPostComments(postId: number) {
     const { data, error } = await supabase
       .from<Comment>('comments')
       .select('*, profiles(id, username, avatar_url)')
-      .eq('post_id', post_id);
+      .eq('post_id', postId);
     if (error) throw error;
     return data;
   }
 
   static async createPost(postData: PostData) {
     const { data, error } = await supabase.from('posts').insert([postData]);
+    if (error) throw error;
+    return data;
+  }
+
+  static async editPost(postId: number, postData: PostData) {
+    const { data, error } = await supabase
+      .from('posts')
+      .upsert({ id: postId, ...postData });
     if (error) throw error;
     return data;
   }
