@@ -81,15 +81,26 @@ export class db {
   }
 
   static async createPost(postData: PostData) {
-    const { data, error } = await supabase.from('posts').insert([postData]);
+    const { data, error } = await supabase
+      .from<Post>('posts')
+      .insert([postData]);
     if (error) throw error;
     return data;
   }
 
   static async editPost(postId: number, postData: PostData) {
     const { data, error } = await supabase
-      .from('posts')
+      .from<Post>('posts')
       .upsert({ id: postId, ...postData });
+    if (error) throw error;
+    return data;
+  }
+
+  static async deletePost(postId: number) {
+    const { data, error } = await supabase
+      .from<Post>('posts')
+      .delete({ returning: 'minimal' })
+      .eq('id', postId);
     if (error) throw error;
     return data;
   }
