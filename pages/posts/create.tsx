@@ -47,8 +47,8 @@ const CreatePost: NextPage = () => {
 
   return (
     <Layout>
-      <div className='pt-20 min-h-screen w-[90%] mx-auto p-6 md:max-w-screen-lg'>
-        <div className='my-6'>
+      <div className='pt-20 min-h-screen w-full mx-auto md:max-w-screen-lg'>
+        <div className='my-6 px-4'>
           <PageTitle>Створити Пост</PageTitle>
         </div>
         <form onSubmit={handleSubmit(onSubmit)}>
