@@ -1,17 +1,17 @@
-import { GetServerSideProps, NextPage } from 'next';
+import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import { Comment, Post } from '@utils/types';
 import { db } from '@utils/db';
 import CommentList from '@components/CommentList';
 import PostCover from '@components/PostCover';
 import Layout from '@components/Layout';
 import TextViewer from '@components/TextViewer';
+import { ParsedUrlQuery } from 'querystring';
 
 type PostDetailsProps = {
   post: Post;
-  comments: Comment[];
 };
 
-const PostDetails: NextPage<PostDetailsProps> = ({ post, comments }) => {
+const PostDetails: NextPage<PostDetailsProps> = ({ post }) => {
   return (
     <Layout>
       <main className='pt-20 mx-auto lg:max-w-screen-lg shadow-xl shadow-[#1a1a1a]'>
@@ -21,28 +21,31 @@ const PostDetails: NextPage<PostDetailsProps> = ({ post, comments }) => {
             {post.content ? post.content : <p>No content...</p>}
           </TextViewer>
         </article>
-        <CommentList comments={comments} />
       </main>
     </Layout>
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const post_id = ctx.params?.id;
+interface Params extends ParsedUrlQuery {
+  id: string;
+}
 
-  if (!post_id) {
-    return {
-      props: {},
-    };
-  }
-
-  const [post, comments] = await Promise.all([
-    db.getPostDetails(Number(post_id)),
-    db.getPostComments(Number(post_id)),
-  ]);
-
+export const getStaticPaths: GetStaticPaths<Params> = async () => {
+  const posts = await db.getPostList();
+  const paths = posts.map((post) => ({
+    params: { id: post.id.toString() },
+  }));
   return {
-    props: { post, comments },
+    paths,
+    fallback: false,
+  };
+};
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  const { id } = params as Params;
+  const post = await db.getPostDetails(Number(id));
+  return {
+    props: { post },
   };
 };
 
