@@ -1,17 +1,25 @@
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
-import { Comment, Post } from '@utils/types';
-import { db } from '@utils/db';
-import CommentList from '@components/CommentList';
-import PostCover from '@components/PostCover';
-import Layout from '@components/Layout';
-import TextViewer from '@components/TextViewer';
 import { ParsedUrlQuery } from 'querystring';
+import { useRouter } from 'next/router';
+import { Post } from '@utils/types';
+import { db } from '@utils/db';
+import Layout from '@components/Layout';
+import PostCover from '@components/PostCover';
+import TextViewer from '@components/TextViewer';
+import Button from '@components/Button';
+import { BiArrowBack } from 'react-icons/bi';
 
 type PostDetailsProps = {
   post: Post;
 };
 
 const PostDetails: NextPage<PostDetailsProps> = ({ post }) => {
+  const router = useRouter();
+
+  const goBack = () => {
+    router.back();
+  };
+
   return (
     <Layout>
       <main className='pt-20 mx-auto lg:max-w-screen-lg shadow-xl shadow-[#1a1a1a]'>
@@ -20,6 +28,9 @@ const PostDetails: NextPage<PostDetailsProps> = ({ post }) => {
           <TextViewer>
             {post.content ? post.content : <p>No content...</p>}
           </TextViewer>
+          <Button onClick={goBack}>
+            <BiArrowBack className='inline' /> Назад
+          </Button>
         </article>
       </main>
     </Layout>
