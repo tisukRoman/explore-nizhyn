@@ -1,12 +1,12 @@
-import Image from 'next/image';
 import { FC } from 'react';
+import Image from 'next/image';
 import { Comment } from '@utils/types';
 
 type CommentListProps = {
   comments: Comment[];
 };
 
-const CommentList: FC<CommentListProps> = ({ comments }) => {
+export const CommentList: FC<CommentListProps> = ({ comments }) => {
   if (!comments?.length) {
     return <div>No comments yet...</div>;
   }
@@ -25,7 +25,9 @@ const CommentList: FC<CommentListProps> = ({ comments }) => {
             />
           </div>
           <div className='text-slate-200 ml-4'>
-            <h5 className='font-medium'>{comment.profiles?.username || 'user'}</h5>
+            <h5 className='font-medium'>
+              {comment.profiles?.username || 'user'}
+            </h5>
             <p>{comment.text}</p>
           </div>
         </li>
@@ -33,5 +35,3 @@ const CommentList: FC<CommentListProps> = ({ comments }) => {
     </ul>
   );
 };
-
-export default CommentList;

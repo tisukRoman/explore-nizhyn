@@ -1,6 +1,6 @@
 import { GetServerSideProps, NextPage } from 'next';
 import AuthorCover from '@components/AuthorCover';
-import CardsList from '@components/CardsList';
+import PostList from '@components/PostList';
 import Layout from '@components/Layout';
 import { Post, Profile } from '@utils/types';
 import { db } from '@utils/db';
@@ -15,7 +15,7 @@ const AuthorPage: NextPage<AuthorPageProps> = ({ posts, profile }) => {
     <Layout>
       <AuthorCover profile={profile} />
       <main className='pt-16 min-h-screen'>
-        <CardsList posts={posts} />
+        <PostList posts={posts} />
       </main>
     </Layout>
   );

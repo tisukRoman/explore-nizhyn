@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { LoginData } from '@utils/types';
 import { useAuth } from '@hooks/useAuth';
 import LoginForm from '@components/LoginForm';
-import PageTitle from '@components/PageTitle';
+import PageTitle from '@components/shared/PageTitle';
 import Layout from '@components/Layout';
 
 const Login: NextPage = () => {

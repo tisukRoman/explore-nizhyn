@@ -6,7 +6,7 @@ import { db } from '@utils/db';
 import Layout from '@components/Layout';
 import PostCover from '@components/PostCover';
 import TextViewer from '@components/TextViewer';
-import Button from '@components/Button';
+import Button from '@components/shared/Button';
 import { BiArrowBack } from 'react-icons/bi';
 
 type PostDetailsProps = {

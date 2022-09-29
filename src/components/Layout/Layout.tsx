@@ -10,7 +10,7 @@ type LayoutProps = {
   children: ReactNode;
 };
 
-const Layout: FC<LayoutProps> = (props) => {
+export const Layout: FC<LayoutProps> = (props) => {
   const { title, description, keywords, children } = props;
 
   return (
@@ -36,5 +36,3 @@ Layout.defaultProps = {
   description: 'Читай цікаві дописи про місто Ніжин',
   keywords: `Ніжин, блог, історія, пам'ятки`,
 };
-
-export default Layout;

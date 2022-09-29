@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { SignUpData } from '@utils/types';
 import { useAuth } from '@hooks/useAuth';
 import Layout from '@components/Layout';
-import PageTitle from '@components/PageTitle';
+import PageTitle from '@components/shared/PageTitle';
 import RegisterForm from '@components/RegisterForm';
 
 const Register: NextPage = () => {

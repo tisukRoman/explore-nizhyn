@@ -1,12 +1,12 @@
 import React, { FC, FormEvent } from 'react';
 import { motion } from 'framer-motion';
-import TextInput from './TextInput';
-import Button from './Button';
+import TextInput from '@components/shared/TextInput';
+import Button from '@components/shared/Button';
 
 type HeaderSearchModalProps = {
   searchValue: string;
   onSearchChange: (e: FormEvent<HTMLInputElement>) => void;
-  onSearch: (e: Event) => void;
+  onSearch: (...args: any) => void;
   onClose: () => void;
 };
 

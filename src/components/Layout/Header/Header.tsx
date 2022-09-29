@@ -15,7 +15,7 @@ import HeaderTextLinks from './HeaderTextLinks';
 import HeaderMobileModal from './HeaderMobileModal';
 import HeaderSearchModal from './HeaderSearchModal';
 
-const Header: FC = () => {
+export const Header: FC = () => {
   const router = useRouter();
   const { user, signOut } = useAuth();
   const [profile, setProfile] = useState<Profile | null>(null);
@@ -137,5 +137,3 @@ const Header: FC = () => {
     </header>
   );
 };
-
-export default Header;

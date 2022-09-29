@@ -10,12 +10,12 @@ import { baseURL } from '@config/baseURL';
 import { Post } from '@utils/types';
 import { db } from '@utils/db';
 
-type CardProps = {
+type PostCardProps = {
   post: Post;
   index: number;
 };
 
-const Card: FC<CardProps> = ({ post, index }) => {
+const PostCard: FC<PostCardProps> = ({ post, index }) => {
   const router = useRouter();
   const { user } = useAuth();
 
@@ -105,4 +105,4 @@ const Card: FC<CardProps> = ({ post, index }) => {
   );
 };
 
-export default Card;
+export default PostCard;
