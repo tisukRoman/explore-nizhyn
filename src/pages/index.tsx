@@ -20,9 +20,7 @@ const Home: NextPage<HomeProps> = ({ posts }) => {
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const searchQuery = ctx.query.q;
-  let posts: Post[] = [];
-
-  posts = searchQuery
+  let posts: Post[] = searchQuery
     ? await db.getSearchedPostList(searchQuery as string)
     : await db.getPostList();
 

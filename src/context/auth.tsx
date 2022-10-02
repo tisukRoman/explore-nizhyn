@@ -1,12 +1,19 @@
-import { createContext, FC, ReactNode, useEffect, useState } from 'react';
+import {
+  createContext,
+  FC,
+  ReactNode,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import { supabase } from '@utils/supabaseClient';
 import { User } from '@supabase/supabase-js';
 import { db } from '@utils/db';
 
 type AuthContextType = {
-  signUp: typeof db.signUp; 
-  signIn: typeof db.login; 
-  signOut: typeof db.logout; 
+  signUp: typeof db.signUp;
+  signIn: typeof db.login;
+  signOut: typeof db.logout;
   user: User | null;
 };
 
@@ -43,12 +50,15 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
     };
   }, []);
 
-  const value = {
-    signUp: db.signUp,
-    signIn: db.login,
-    signOut: db.logout,
-    user,
-  };
+  const value = useMemo(
+    () => ({
+      signUp: db.signUp,
+      signIn: db.login,
+      signOut: db.logout,
+      user,
+    }),
+    [user]
+  );
 
   return (
     <AuthContext.Provider value={value}>

@@ -16,9 +16,10 @@ const schema = yup.object({
 
 type LoginProps = {
   onSubmit: (data: LoginData) => void;
+  isLoading: boolean;
 };
 
-const LoginForm: FC<LoginProps> = ({ onSubmit }) => {
+const LoginForm: FC<LoginProps> = ({ onSubmit, isLoading }) => {
   const {
     register,
     handleSubmit,
@@ -34,6 +35,7 @@ const LoginForm: FC<LoginProps> = ({ onSubmit }) => {
         type='email'
         {...register('email')}
         placeholder='Введіть email...'
+        disabled={isLoading}
         has_error={errors.email ? 1 : 0}
         error_text={errors.email?.message}
       />
@@ -41,10 +43,11 @@ const LoginForm: FC<LoginProps> = ({ onSubmit }) => {
         type='password'
         {...register('password')}
         placeholder='Введіть пароль...'
+        disabled={isLoading}
         has_error={errors.password ? 1 : 0}
         error_text={errors.password?.message}
       />
-      <Button type='submit'>Увійти</Button>
+      <Button type='submit'>{isLoading ? 'Зачекайте...' : 'Увійти'}</Button>
     </form>
   );
 };
