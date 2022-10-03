@@ -1,16 +1,12 @@
 import type { GetServerSideProps, NextPage } from 'next';
-import { Post } from '@utils/types';
 import { db } from '@utils/db';
 import Layout from '@components/Layout';
 import PostList from '@components/PostList';
 import { useGetPostList } from '@hooks/useGetPostList';
+import { dehydrate, QueryClient } from '@tanstack/react-query';
 
-type HomeProps = {
-  posts: Post[];
-};
-
-const Home: NextPage<HomeProps> = (props) => {
-  const [posts, error] = useGetPostList(props.posts);
+const Home: NextPage = () => {
+  const [posts, error] = useGetPostList();
 
   const renderPosts = () => {
     if (posts) {
@@ -28,14 +24,20 @@ const Home: NextPage<HomeProps> = (props) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const searchQuery = ctx.query.q;
-  let posts: Post[] = searchQuery
+export const getPosts = async (searchQuery?: string) => {
+  return searchQuery
     ? await db.getSearchedPostList(searchQuery as string)
     : await db.getPostList();
+};
 
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const searchQuery = ctx.query.q as string | undefined;
+  const queryClient = new QueryClient();
+  await queryClient.prefetchQuery(['posts'], () => getPosts(searchQuery));
   return {
-    props: { posts },
+    props: {
+      dehydratedState: dehydrate(queryClient),
+    },
   };
 };
 

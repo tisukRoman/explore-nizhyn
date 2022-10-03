@@ -1,4 +1,4 @@
-import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
+import { GetServerSideProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
 import { useGetPost } from '@hooks/useGetPost';
@@ -8,11 +8,12 @@ import PostCover from '@components/PostCover';
 import TextViewer from '@components/TextViewer';
 import Button from '@components/shared/Button';
 import { BiArrowBack } from 'react-icons/bi';
+import { withCSR } from 'hoc/withCSR';
 
 const PostDetails: NextPage = () => {
   const router = useRouter();
   const postID = router.query?.id as string;
-  const [post, error] = useGetPost(postID);
+  const [post, isFetching, error] = useGetPost(postID);
 
   const goBack = () => {
     router.back();
@@ -24,9 +25,11 @@ const PostDetails: NextPage = () => {
         <>
           <PostCover post={post} />
           <article className='text-slate-200 p-6'>
-            <TextViewer>
-              {post.content ? post.content : <p>No content...</p>}
-            </TextViewer>
+            {!post.content || isFetching ? (
+              <p>Завантаження...</p>
+            ) : (
+              <TextViewer>{post.content}</TextViewer>
+            )}
             <Button onClick={goBack}>
               <BiArrowBack className='inline' /> Назад
             </Button>
@@ -49,28 +52,19 @@ const PostDetails: NextPage = () => {
   );
 };
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  const posts = await db.getPostList();
-  const paths = posts.map((post) => ({
-    params: { id: post.id.toString() },
-  }));
-  return {
-    paths,
-    fallback: 'blocking',
-  };
-};
-
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const id = params?.id as string;
-  const queryClient = new QueryClient();
-  await queryClient.prefetchQuery(['post', id], () =>
-    db.getPostDetails(Number(id))
-  );
-  return {
-    props: {
-      dehydratedState: dehydrate(queryClient),
-    },
-  };
-};
+export const getServerSideProps: GetServerSideProps = withCSR(
+  async (ctx: any) => {
+    const id = ctx.params.id as string;
+    const queryClient = new QueryClient();
+    await queryClient.prefetchQuery(['post', id], () =>
+      db.getPostDetails(Number(id))
+    );
+    return {
+      props: {
+        dehydratedState: dehydrate(queryClient),
+      },
+    };
+  }
+);
 
 export default PostDetails;

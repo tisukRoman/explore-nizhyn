@@ -60,7 +60,7 @@ const PostCard: FC<PostCardProps> = ({ post, index }) => {
         className='object-cover w-full h-full z-0 drop-shadow-2xl lg:grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700'
       />
       <article className='bg-black w-full h-full z-1 flex flex-col items-center justify-center absolute bg-opacity-60 shadow-2xl'>
-        <Link href={`/posts/${post.id}`}>
+        <Link href={`/posts/${post.id}`} shallow={true}>
           <h3 className='text-white font-medium uppercase text-3xl hover-green text-center max-w-[80%] mx-auto'>
             {post.title}
           </h3>
@@ -69,7 +69,7 @@ const PostCard: FC<PostCardProps> = ({ post, index }) => {
           {post.tag}
         </p>
         <div className='bg-green w-10 my-3 h-1' />
-        <Link href={`/posts/${post.id}`}>
+        <Link href={`/posts/${post.id}`} shallow={true}>
           <a className='text-white uppercase font-medium hover-green'>
             Читати пост &#8594;
           </a>

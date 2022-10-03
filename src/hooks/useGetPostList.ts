@@ -3,14 +3,16 @@ import { useQuery } from '@tanstack/react-query';
 import { Post } from '@utils/types';
 import { db } from '@utils/db';
 
-export const useGetPostList = (
-  initialPosts: Post[]
-): [Post[] | undefined, PostgrestError | null] => {
+export const useGetPostList = (): [
+  Post[] | undefined,
+  PostgrestError | null
+] => {
   const { data, error } = useQuery<Post[], PostgrestError>(
     ['posts'],
     db.getPostList,
     {
-      initialData: initialPosts,
+      refetchOnMount: false,
+      refetchOnWindowFocus: false,
     }
   );
   return [data, error];
