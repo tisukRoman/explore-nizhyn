@@ -1,12 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
-import { db } from '@utils/db';
+import { PostgrestError } from '@supabase/supabase-js';
 import { Post } from '@utils/types';
+import { db } from '@utils/db';
 
 export const useGetPost = (
-  id: number
-): [Post | undefined, boolean, boolean] => {
-  const { data, isLoading, isError } = useQuery(['post', id], () =>
-    db.getPostDetails(id)
+  id: string
+): [Post | undefined, PostgrestError | null] => {
+  const { data, error } = useQuery<Post, PostgrestError>(['post', id], () =>
+    db.getPostDetails(Number(id))
   );
-  return [data, isLoading, isError];
+  return [data, error];
 };

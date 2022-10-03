@@ -3,17 +3,27 @@ import { Post } from '@utils/types';
 import { db } from '@utils/db';
 import Layout from '@components/Layout';
 import PostList from '@components/PostList';
+import { useGetPostList } from '@hooks/useGetPostList';
 
 type HomeProps = {
   posts: Post[];
 };
 
-const Home: NextPage<HomeProps> = ({ posts }) => {
+const Home: NextPage<HomeProps> = (props) => {
+  const [posts, error] = useGetPostList(props.posts);
+
+  const renderPosts = () => {
+    if (posts) {
+      return <PostList posts={posts} />;
+    } else if (error) {
+      return <div>{error.message}</div>;
+    } else {
+      return <div>Зачекайте...</div>;
+    }
+  };
   return (
     <Layout>
-      <main className='pt-16 min-h-screen'>
-        <PostList posts={posts} />
-      </main>
+      <main className='pt-16 min-h-screen'>{renderPosts()}</main>
     </Layout>
   );
 };

@@ -11,19 +11,15 @@ import { BiArrowBack } from 'react-icons/bi';
 
 const PostDetails: NextPage = () => {
   const router = useRouter();
-  const postID = Number(router.query?.id);
-  const [post, isLoading, isError] = useGetPost(postID);
+  const postID = router.query?.id as string;
+  const [post, error] = useGetPost(postID);
 
   const goBack = () => {
     router.back();
   };
 
   const renderPost = () => {
-    if (isLoading) {
-      return <div>Зачекайте...</div>;
-    } else if (isError || !post) {
-      return <div>Помилка</div>;
-    } else {
+    if (post) {
       return (
         <>
           <PostCover post={post} />
@@ -37,6 +33,10 @@ const PostDetails: NextPage = () => {
           </article>
         </>
       );
+    } else if (error) {
+      return <div>{error.message}</div>;
+    } else {
+      return <div>Loader...</div>;
     }
   };
 
