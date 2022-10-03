@@ -2,6 +2,7 @@ import { FC, ReactNode } from 'react';
 import Head from 'next/head';
 import Header from './Header';
 import Footer from './Footer';
+import { useIsFetching } from '@tanstack/react-query';
 
 type LayoutProps = {
   title?: string;
@@ -17,7 +18,7 @@ export const Layout: FC<LayoutProps> = (props) => {
     <>
       <Head>
         <title>{title}</title>
-        <meta charSet="utf-8" />
+        <meta charSet='utf-8' />
         <meta name='description' content={description} />
         <meta name='keywords' content={keywords} />
         <link rel='icon' type='image/x-icon' href='/favicon.ico' />

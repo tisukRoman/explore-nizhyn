@@ -1,6 +1,6 @@
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
-import { dehydrate, QueryClient } from 'react-query';
 import { useRouter } from 'next/router';
+import { dehydrate, QueryClient } from '@tanstack/react-query';
 import { useGetPost } from '@hooks/useGetPost';
 import { db } from '@utils/db';
 import Layout from '@components/Layout';
@@ -25,7 +25,7 @@ const PostDetails: NextPage = () => {
       return <div>Помилка</div>;
     } else {
       return (
-        <main className='pt-20 mx-auto lg:max-w-screen-lg shadow-xl shadow-[#1a1a1a]'>
+        <>
           <PostCover post={post} />
           <article className='text-slate-200 p-6'>
             <TextViewer>
@@ -35,12 +35,18 @@ const PostDetails: NextPage = () => {
               <BiArrowBack className='inline' /> Назад
             </Button>
           </article>
-        </main>
+        </>
       );
     }
   };
 
-  return <Layout>{renderPost()}</Layout>;
+  return (
+    <Layout>
+      <main className='pt-20 mx-auto lg:max-w-screen-lg shadow-xl shadow-[#1a1a1a]'>
+        {renderPost()}
+      </main>
+    </Layout>
+  );
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {

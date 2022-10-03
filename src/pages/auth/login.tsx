@@ -1,12 +1,12 @@
 import Link from 'next/link';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { LoginData } from '@utils/types';
-import { useMutation } from 'react-query';
+import { useMutation } from '@tanstack/react-query';
 import { useAuth } from '@hooks/useAuth';
 import LoginForm from '@components/LoginForm';
 import PageTitle from '@components/shared/PageTitle';
 import Layout from '@components/Layout';
+import { LoginData } from '@utils/types';
 
 const Login: NextPage = () => {
   const router = useRouter();

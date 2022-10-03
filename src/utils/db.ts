@@ -118,7 +118,7 @@ export class db {
         avatar_url: authData.avatar_url,
       })
       .eq('id', user?.id);
-    if (err) return err;
+    if (err) throw err;
     return 'Реєстрація успішна';
   }
 

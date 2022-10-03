@@ -47,7 +47,9 @@ const LoginForm: FC<LoginProps> = ({ onSubmit, isLoading }) => {
         has_error={errors.password ? 1 : 0}
         error_text={errors.password?.message}
       />
-      <Button type='submit'>{isLoading ? 'Зачекайте...' : 'Увійти'}</Button>
+      <Button type='submit' disabled={isLoading}>
+        {isLoading ? 'Зачекайте...' : 'Увійти'}
+      </Button>
     </form>
   );
 };
