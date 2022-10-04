@@ -5,6 +5,7 @@ import { useGetPost } from '@hooks/useGetPost';
 import { db } from '@utils/db';
 import Layout from '@components/Layout';
 import PostCover from '@components/PostCover';
+import { motion } from 'framer-motion';
 import TextViewer from '@components/TextViewer';
 import Button from '@components/shared/Button';
 import { BiArrowBack } from 'react-icons/bi';
@@ -28,7 +29,13 @@ const PostDetails: NextPage = () => {
             {!post.content || isFetching ? (
               <p>Завантаження...</p>
             ) : (
-              <TextViewer>{post.content}</TextViewer>
+              <motion.div
+                initial={{ opacity: 0, translateY: -50 }}
+                animate={{ opacity: 1, translateY: 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                <TextViewer>{post.content}</TextViewer>
+              </motion.div>
             )}
             <Button onClick={goBack}>
               <BiArrowBack className='inline' /> Назад
