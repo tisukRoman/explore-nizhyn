@@ -1,11 +1,11 @@
 import { GetServerSideProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
+import { motion } from 'framer-motion';
 import { useGetPost } from '@hooks/useGetPost';
 import { db } from '@utils/db';
 import Layout from '@components/Layout';
 import PostCover from '@components/PostCover';
-import { motion } from 'framer-motion';
 import TextViewer from '@components/TextViewer';
 import Button from '@components/shared/Button';
 import { BiArrowBack } from 'react-icons/bi';

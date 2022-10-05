@@ -1,12 +1,15 @@
 import * as yup from 'yup';
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
+import { dehydrate, QueryClient } from '@tanstack/react-query';
 import { PostData } from '@utils/types';
 import { db } from '@utils/db';
+import { motion } from 'framer-motion';
 import { ParsedUrlQuery } from 'querystring';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRedirect } from '@hooks/useRedirect';
+import { useGetPost } from '@hooks/useGetPost';
 import { useAuth } from '@hooks/useAuth';
 import Layout from '@components/Layout';
 import Button from '@components/shared/Button';
@@ -24,14 +27,12 @@ const schema = yup.object({
   description: yup.string(),
 });
 
-type EditPostProps = {
-  post: PostData;
-};
-
-const EditPost: NextPage<EditPostProps> = ({ post }) => {
+const EditPost: NextPage = () => {
   const router = useRouter();
   const { user } = useAuth();
   useRedirect(user);
+  const postID = router.query?.id as string;
+  const [post, isFetching, error] = useGetPost(postID);
 
   const {
     control,
@@ -52,12 +53,9 @@ const EditPost: NextPage<EditPostProps> = ({ post }) => {
     }
   };
 
-  return (
-    <Layout>
-      <div className='pt-20 min-h-screen w-full mx-auto md:max-w-screen-lg'>
-        <div className='my-6 px-4'>
-          <PageTitle>Редагувати Пост</PageTitle>
-        </div>
+  const renderForm = () => {
+    if (post) {
+      return (
         <form onSubmit={handleSubmit(onSubmit)}>
           <TextInput
             type='text'
@@ -87,9 +85,34 @@ const EditPost: NextPage<EditPostProps> = ({ post }) => {
             has_error={errors.description ? 1 : 0}
             error_text={errors.description?.message}
           />
-          <TextEditor name='content' control={control} />
+          {isFetching ? (
+            <p className='text-white'>Завантаження...</p>
+          ) : (
+            <motion.div
+              initial={{ opacity: 0, translateY: -50 }}
+              animate={{ opacity: 1, translateY: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <TextEditor name='content' control={control} />
+            </motion.div>
+          )}
           <Button type='submit'>Зберегти зміни</Button>
         </form>
+      );
+    } else if (error) {
+      return <>Помилка</>;
+    } else {
+      return <>Завантаження...</>;
+    }
+  };
+
+  return (
+    <Layout>
+      <div className='pt-20 min-h-screen w-full mx-auto md:max-w-screen-lg'>
+        <div className='my-6 px-4'>
+          <PageTitle>Редагувати Пост</PageTitle>
+          {renderForm()}
+        </div>
       </div>
     </Layout>
   );
@@ -112,10 +135,12 @@ export const getStaticPaths: GetStaticPaths<Params> = async () => {
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const { id: postId } = params as Params;
-  const { profiles, id, ...post } = await db.getPostDetails(Number(postId));
-
+  const queryClient = new QueryClient();
+  await queryClient.prefetchQuery(['post', postId], () =>
+    db.getPostDetails(Number(postId))
+  );
   return {
-    props: { post },
+    props: { dehydratedState: dehydrate(queryClient) },
   };
 };
 
