@@ -13,8 +13,7 @@ import { withCSR } from 'hoc/withCSR';
 
 const PostDetails: NextPage = () => {
   const router = useRouter();
-  const postID = router.query?.id as string;
-  const [post, isFetching, error] = useGetPost(postID);
+  const [post, isFetching, error] = useGetPost();
 
   const goBack = () => {
     router.back();

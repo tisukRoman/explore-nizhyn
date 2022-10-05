@@ -5,7 +5,6 @@ import { PostData } from '@utils/types';
 import { db } from '@utils/db';
 import { motion } from 'framer-motion';
 import { ParsedUrlQuery } from 'querystring';
-import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRedirect } from '@hooks/useRedirect';
@@ -16,6 +15,7 @@ import Button from '@components/shared/Button';
 import TextInput from '@components/shared/TextInput';
 import PageTitle from '@components/shared/PageTitle';
 import TextEditor from '@components/TextEditor';
+import { useEditPost } from '@hooks/useEditPost';
 
 const schema = yup.object({
   title: yup.string().required(`Заголовок обов'язково`),
@@ -28,11 +28,11 @@ const schema = yup.object({
 });
 
 const EditPost: NextPage = () => {
-  const router = useRouter();
   const { user } = useAuth();
   useRedirect(user);
-  const postID = router.query?.id as string;
-  const [post, isFetching, error] = useGetPost(postID);
+
+  const [post, isFetching, error] = useGetPost();
+  const [editPost, editError, isEditing] = useEditPost();
 
   const {
     control,
@@ -47,9 +47,7 @@ const EditPost: NextPage = () => {
 
   const onSubmit = async (data: PostData) => {
     if (data.content && user?.id) {
-      const postId = Number(router.query.id);
-      await db.editPost(postId, { ...data, author_id: user.id });
-      router.push(`/posts/${postId}`);
+      await editPost({ ...data, author_id: user.id });
     }
   };
 
@@ -61,6 +59,7 @@ const EditPost: NextPage = () => {
             type='text'
             {...register('title')}
             placeholder='Заголовок посту...'
+            disabled={isEditing}
             has_error={errors.title ? 1 : 0}
             error_text={errors.title?.message}
           />
@@ -68,6 +67,7 @@ const EditPost: NextPage = () => {
             type='text'
             {...register('tag')}
             placeholder='Назва категорії...'
+            disabled={isEditing}
             has_error={errors.tag ? 1 : 0}
             error_text={errors.tag?.message}
           />
@@ -75,6 +75,7 @@ const EditPost: NextPage = () => {
             type='text'
             {...register('img_src')}
             placeholder='Введіть url картинки...'
+            disabled={isEditing}
             has_error={errors.img_src ? 1 : 0}
             error_text={errors.img_src?.message}
           />
@@ -82,6 +83,7 @@ const EditPost: NextPage = () => {
             type='text'
             {...register('description')}
             placeholder='Короткий опис...'
+            disabled={isEditing}
             has_error={errors.description ? 1 : 0}
             error_text={errors.description?.message}
           />
@@ -96,7 +98,9 @@ const EditPost: NextPage = () => {
               <TextEditor name='content' control={control} />
             </motion.div>
           )}
-          <Button type='submit'>Зберегти зміни</Button>
+          <Button type='submit' disabled={isEditing}>
+            {isEditing ? 'Зачекайте' : 'Зберегти зміни'}
+          </Button>
         </form>
       );
     } else if (error) {

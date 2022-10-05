@@ -1,6 +1,5 @@
 import * as yup from 'yup';
 import { NextPage } from 'next';
-import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRedirect } from '@hooks/useRedirect';
@@ -11,7 +10,6 @@ import TextInput from '@components/shared/TextInput';
 import PageTitle from '@components/shared/PageTitle';
 import Button from '@components/shared/Button';
 import { PostData } from '@utils/types';
-import { db } from '@utils/db';
 import { useCreatePost } from '@hooks/useCreatePost';
 
 const schema = yup.object({
@@ -25,7 +23,6 @@ const schema = yup.object({
 });
 
 const CreatePost: NextPage = () => {
-  const router = useRouter();
   const { user } = useAuth();
   useRedirect(user);
 
@@ -44,9 +41,6 @@ const CreatePost: NextPage = () => {
   const onSubmit = async (data: PostData) => {
     if (data.content && user?.id) {
       await createPost({ ...data, author_id: user.id });
-      if (!createError) {
-        router.push('/');
-      }
     }
   };
 

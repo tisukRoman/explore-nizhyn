@@ -6,20 +6,23 @@ import {
 import { PostgrestError } from '@supabase/supabase-js';
 import { Post, PostData } from '@utils/types';
 import { db } from '@utils/db';
+import { useRouter } from 'next/router';
 
-export const useEditPost = (
-  postId: number
-): [
+export const useEditPost = (): [
   UseMutateAsyncFunction<Post[], unknown, PostData, unknown>,
   PostgrestError | null,
   boolean
 ] => {
   const client = useQueryClient();
+  const router = useRouter();
+  const postId = Number(router.query?.id);
+
   const { mutateAsync, error, isLoading } = useMutation(
     (postData: PostData) => db.editPost(postId, postData),
     {
       onSuccess: () => {
-        client.invalidateQueries(['posts', postId]);
+        client.invalidateQueries(['posts']);
+        router.push(`/posts/${postId}`);
       },
     }
   );

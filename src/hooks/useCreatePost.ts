@@ -6,6 +6,7 @@ import {
 import { PostgrestError } from '@supabase/supabase-js';
 import { Post, PostData } from '@utils/types';
 import { db } from '@utils/db';
+import { useRouter } from 'next/router';
 
 export const useCreatePost = (): [
   UseMutateAsyncFunction<Post[], unknown, PostData, unknown>,
@@ -13,11 +14,13 @@ export const useCreatePost = (): [
   boolean
 ] => {
   const client = useQueryClient();
+  const router = useRouter();
   const { mutateAsync, error, isLoading } = useMutation(
     (postData: PostData) => db.createPost(postData),
     {
       onSuccess: () => {
         client.invalidateQueries(['posts']);
+        router.push('/');
       },
     }
   );

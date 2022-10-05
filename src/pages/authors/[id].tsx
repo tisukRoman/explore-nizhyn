@@ -5,12 +5,9 @@ import Layout from '@components/Layout';
 import { db } from '@utils/db';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
 import { useGetAuthor } from '@hooks/useGetAuthor';
-import { useRouter } from 'next/router';
 
 const AuthorPage: NextPage = () => {
-  const router = useRouter();
-  const authorId = router.query?.id as string;
-  const [data, isFetching, error] = useGetAuthor(authorId);
+  const [data, isFetching, error] = useGetAuthor();
 
   const renderAuthorPage = () => {
     if (data) {

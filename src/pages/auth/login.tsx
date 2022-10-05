@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { NextPage } from 'next';
-import { useRouter } from 'next/router';
 import { useLogin } from '@hooks/useLogin';
 import { motion } from 'framer-motion';
 import { LoginData } from '@utils/types';
@@ -9,14 +8,10 @@ import PageTitle from '@components/shared/PageTitle';
 import Layout from '@components/Layout';
 
 const Login: NextPage = () => {
-  const router = useRouter();
   const [login, loginError, isLogging] = useLogin();
 
   const onSubmit = async (data: LoginData) => {
     await login(data);
-    if (!loginError) {
-      router.push('/');
-    }
   };
 
   const renderError = () => {
