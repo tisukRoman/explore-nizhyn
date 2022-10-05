@@ -4,20 +4,21 @@ import {
   useQueryClient,
 } from '@tanstack/react-query';
 import { PostgrestError } from '@supabase/supabase-js';
-import { Post, PostData } from '@utils/types';
 import { db } from '@utils/db';
+import { Post } from '@utils/types';
 
-export const useCreatePost = (): [
-  UseMutateAsyncFunction<Post[], unknown, PostData, unknown>,
+export const useDeletePost = (): [
+  UseMutateAsyncFunction<Post[], unknown, number, unknown>,
   PostgrestError | null,
   boolean
 ] => {
   const client = useQueryClient();
   const { mutateAsync, error, isLoading } = useMutation(
-    (postData: PostData) => db.createPost(postData),
+    (postId: number) => db.deletePost(postId),
     {
       onSuccess: () => {
         client.invalidateQueries(['posts']);
+        client.invalidateQueries(['authors']);
       },
     }
   );

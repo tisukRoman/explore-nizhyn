@@ -3,12 +3,12 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useAuth } from '@hooks/useAuth';
+import { useDeletePost } from '@hooks/useDeletePost';
 import { motion } from 'framer-motion';
 import { BiLink } from 'react-icons/bi';
 import { AiOutlineDelete, AiOutlineEdit } from 'react-icons/ai';
 import { baseURL } from '@config/baseURL';
 import { Post } from '@utils/types';
-import { db } from '@utils/db';
 
 type PostCardProps = {
   post: Post;
@@ -19,6 +19,8 @@ const PostCard: FC<PostCardProps> = ({ post, index }) => {
   const router = useRouter();
   const { user } = useAuth();
 
+  const [deletePost] = useDeletePost();
+
   const onCopyLink = () => {
     window.navigator.clipboard.writeText(`${baseURL}/posts/${post.id}`);
   };
@@ -28,8 +30,7 @@ const PostCard: FC<PostCardProps> = ({ post, index }) => {
   };
 
   const onDeletePost = async () => {
-    await db.deletePost(post.id);
-    router.push(`/authors/${post.profiles.id}`);
+    await deletePost(post.id);
   };
 
   const buttons = [
