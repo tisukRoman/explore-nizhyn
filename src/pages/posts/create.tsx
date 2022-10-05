@@ -12,6 +12,7 @@ import PageTitle from '@components/shared/PageTitle';
 import Button from '@components/shared/Button';
 import { PostData } from '@utils/types';
 import { db } from '@utils/db';
+import { useCreatePost } from '@hooks/useCreatePost';
 
 const schema = yup.object({
   title: yup.string().required(`Заголовок обов'язково`),
@@ -38,11 +39,25 @@ const CreatePost: NextPage = () => {
     mode: 'onChange',
   });
 
+  const [createPost, createError, isCreating] = useCreatePost();
+
   const onSubmit = async (data: PostData) => {
     if (data.content && user?.id) {
-      await db.createPost({ ...data, author_id: user.id });
-      router.push('/');
+      await createPost({ ...data, author_id: user.id });
+      if (!createError) {
+        router.push('/');
+      }
     }
+  };
+
+  const renderError = () => {
+    return (
+      createError && (
+        <div className='text-red-500 text-lg font-bold my-8'>
+          Помилка створення посту
+        </div>
+      )
+    );
   };
 
   return (
@@ -50,12 +65,14 @@ const CreatePost: NextPage = () => {
       <div className='pt-20 min-h-screen w-full mx-auto md:max-w-screen-lg'>
         <div className='my-6 px-4'>
           <PageTitle>Створити Пост</PageTitle>
+          {renderError()}
         </div>
         <form onSubmit={handleSubmit(onSubmit)}>
           <TextInput
             type='text'
             {...register('title')}
             placeholder='Заголовок посту...'
+            disabled={isCreating}
             has_error={errors.title ? 1 : 0}
             error_text={errors.title?.message}
           />
@@ -63,6 +80,7 @@ const CreatePost: NextPage = () => {
             type='text'
             {...register('tag')}
             placeholder='Назва категорії...'
+            disabled={isCreating}
             has_error={errors.tag ? 1 : 0}
             error_text={errors.tag?.message}
           />
@@ -70,6 +88,7 @@ const CreatePost: NextPage = () => {
             type='text'
             {...register('img_src')}
             placeholder='Введіть url картинки...'
+            disabled={isCreating}
             has_error={errors.img_src ? 1 : 0}
             error_text={errors.img_src?.message}
           />
@@ -77,11 +96,14 @@ const CreatePost: NextPage = () => {
             type='text'
             {...register('description')}
             placeholder='Короткий опис...'
+            disabled={isCreating}
             has_error={errors.description ? 1 : 0}
             error_text={errors.description?.message}
           />
           <TextEditor name='content' control={control} />
-          <Button type='submit'>Створити Пост</Button>
+          <Button type='submit' disabled={isCreating}>
+            {isCreating ? 'Зачекайте...' : 'Створити Пост'}
+          </Button>
         </form>
       </div>
     </Layout>
