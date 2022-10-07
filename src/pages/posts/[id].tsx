@@ -2,18 +2,21 @@ import { GetServerSideProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
-import { useGetPost } from '@hooks/useGetPost';
 import { db } from '@utils/db';
+import { useGetPost } from '@hooks/useGetPost';
+import { useGetCommentList } from '@hooks/useGetCommentList';
 import Layout from '@components/Layout';
+import Button from '@components/shared/Button';
 import PostCover from '@components/PostCover';
 import TextViewer from '@components/TextViewer';
-import Button from '@components/shared/Button';
+import CommentList from '@components/CommentList';
 import { BiArrowBack } from 'react-icons/bi';
 import { withCSR } from 'hoc/withCSR';
 
 const PostDetails: NextPage = () => {
   const router = useRouter();
-  const [post, isFetching, error] = useGetPost();
+  const [post, isPostFetching, postError] = useGetPost();
+  const [comments, isCommentsFetching, commentsError] = useGetCommentList();
 
   const goBack = () => {
     router.back();
@@ -25,7 +28,7 @@ const PostDetails: NextPage = () => {
         <>
           <PostCover post={post} />
           <article className='text-slate-200 p-6'>
-            {!post.content || isFetching ? (
+            {!post.content || isPostFetching ? (
               <p>Завантаження...</p>
             ) : (
               <motion.div
@@ -42,17 +45,30 @@ const PostDetails: NextPage = () => {
           </article>
         </>
       );
-    } else if (error) {
-      return <div>{error.message}</div>;
+    } else if (postError) {
+      return <div>{postError.message}</div>;
     } else {
-      return <div>Loader...</div>;
+      return <div>Завантаження...</div>;
+    }
+  };
+
+  const renderComments = () => {
+    if (comments) {
+      return <CommentList comments={comments} />;
+    } else if (commentsError) {
+      return <div>Не вдалося загрузити коментарі...</div>;
+    } else {
+      return <div>Завантаження...</div>;
     }
   };
 
   return (
     <Layout>
       <main className='pt-20 mx-auto lg:max-w-screen-lg shadow-xl shadow-[#1a1a1a]'>
-        {renderPost()}
+        <>
+          {renderPost()}
+          {renderComments()}
+        </>
       </main>
     </Layout>
   );

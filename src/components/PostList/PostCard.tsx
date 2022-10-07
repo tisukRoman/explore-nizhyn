@@ -1,14 +1,14 @@
 import { FC } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { motion } from 'framer-motion';
 import { useRouter } from 'next/router';
+import { Post } from '@utils/types';
+import { baseURL } from '@config/baseURL';
 import { useAuth } from '@hooks/useAuth';
 import { useDeletePost } from '@hooks/useDeletePost';
-import { motion } from 'framer-motion';
-import { BiLink } from 'react-icons/bi';
 import { AiOutlineDelete, AiOutlineEdit } from 'react-icons/ai';
-import { baseURL } from '@config/baseURL';
-import { Post } from '@utils/types';
+import { BiLink } from 'react-icons/bi';
 
 type PostCardProps = {
   post: Post;
@@ -48,7 +48,7 @@ const PostCard: FC<PostCardProps> = ({ post, index }) => {
 
   return (
     <motion.div
-      initial={{ opacity: 0, translateX: -20 }}
+      initial={{ opacity: 0, translateX: -50 }}
       animate={{ opacity: 1, translateX: 0 }}
       transition={{ duration: 0.3, delay: index * 0.1 }}
       className='h-128 w-full bg-gray-200 overflow-hidden relative group lg:first:col-span-2'

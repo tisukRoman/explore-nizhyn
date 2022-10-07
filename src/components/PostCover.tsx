@@ -1,13 +1,10 @@
 import { FC } from 'react';
 import Image from 'next/image';
-import { Post } from '@utils/types';
 import { motion } from 'framer-motion';
+import { toLocaleDate } from '@utils/toLocaleDate';
+import { Post } from '@utils/types';
 
 const PostCover: FC<{ post: Post }> = ({ post }) => {
-  const localeDate = new Date(post.created_at as string).toLocaleDateString(
-    'ua-UA'
-  );
-
   return (
     <div className='w-full h-128 bg-[#000] relative'>
       <Image
@@ -65,7 +62,7 @@ const PostCover: FC<{ post: Post }> = ({ post }) => {
           </span>
         </div>
         <div className='scale-75 font-light md:scale-90'>
-          Створено: {localeDate}
+          Створено: {toLocaleDate(post.created_at)}
         </div>
       </motion.div>
     </div>
