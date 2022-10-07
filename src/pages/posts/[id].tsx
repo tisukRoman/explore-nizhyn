@@ -27,7 +27,7 @@ const PostDetails: NextPage = () => {
       return (
         <>
           <PostCover post={post} />
-          <article className='text-slate-200 p-6'>
+          <article className='text-slate-200 p-2 md:p-6'>
             {!post.content || isPostFetching ? (
               <p>Завантаження...</p>
             ) : (

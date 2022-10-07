@@ -12,10 +12,13 @@ export const CommentList: FC<CommentListProps> = ({ comments }) => {
   }
 
   return (
-    <ul className='w-full my-16'>
-      {comments.map((comment) => (
-        <CommentItem key={comment.id} comment={comment} />
-      ))}
-    </ul>
+    <>
+      <div className='text-white my-8 ml-6 text-xl'>Коментарі:</div>
+      <ul className='w-full'>
+        {comments.map((comment) => (
+          <CommentItem key={comment.id} comment={comment} />
+        ))}
+      </ul>
+    </>
   );
 };
