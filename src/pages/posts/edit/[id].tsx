@@ -1,7 +1,7 @@
 import * as yup from 'yup';
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
-import { PostData } from '@utils/types';
+import { Post, PostData } from '@utils/types';
 import { db } from '@utils/db';
 import { motion } from 'framer-motion';
 import { ParsedUrlQuery } from 'querystring';
@@ -9,13 +9,13 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRedirect } from '@hooks/useRedirect';
 import { useGetPost } from '@hooks/useGetPost';
+import { useEditPost } from '@hooks/useEditPost';
 import { useAuth } from '@hooks/useAuth';
 import Layout from '@components/Layout';
 import Button from '@components/shared/Button';
 import TextInput from '@components/shared/TextInput';
 import PageTitle from '@components/shared/PageTitle';
 import TextEditor from '@components/TextEditor';
-import { useEditPost } from '@hooks/useEditPost';
 
 const schema = yup.object({
   title: yup.string().required(`Заголовок обов'язково`),
@@ -46,8 +46,10 @@ const EditPost: NextPage = () => {
   });
 
   const onSubmit = async (data: PostData) => {
-    if (data.content && user?.id) {
-      await editPost({ ...data, author_id: user.id });
+    const { profiles, ...postData } = data as Post;
+
+    if (postData.content && user?.id) {
+      await editPost({ ...postData, author_id: user.id });
     }
   };
 

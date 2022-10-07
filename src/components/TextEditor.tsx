@@ -1,5 +1,5 @@
-import { FC } from 'react';
 import dynamic from 'next/dynamic';
+import { FC } from 'react';
 import { useController, UseControllerProps } from 'react-hook-form';
 import { PostData } from '@utils/types';
 import 'react-quill/dist/quill.snow.css';
@@ -43,7 +43,6 @@ const modules = {
     matchVisual: false,
   },
 };
-
 
 const formats = [
   'header',
