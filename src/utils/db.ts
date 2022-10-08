@@ -7,6 +7,7 @@ import {
   Roles,
   Profile,
   PostData,
+  CommentData,
 } from './types';
 
 export class db {
@@ -76,6 +77,14 @@ export class db {
       .from<Comment>('comments')
       .select('*, profiles(id, username, avatar_url)')
       .eq('post_id', postId);
+    if (error) throw error;
+    return data;
+  }
+
+  static async createComment(commentData: CommentData) {
+    const { data, error } = await supabase
+      .from<Comment>('comments')
+      .insert([commentData]);
     if (error) throw error;
     return data;
   }

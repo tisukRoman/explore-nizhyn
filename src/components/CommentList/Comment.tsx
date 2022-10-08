@@ -13,8 +13,8 @@ const Comment: FC<CommentProps> = ({ comment }) => {
       <div className='w-20 h-20 mb-8 overflow-hidden relative rounded-full shrink-0'>
         <Image
           unoptimized
-          src={comment.profiles.avatar_url || '/images/user.png'}
-          alt={comment.profiles.username}
+          src={comment.profiles?.avatar_url || '/images/user.png'}
+          alt={comment.profiles?.username || 'Анонім'}
           layout='fill'
           className='object-cover'
         />
