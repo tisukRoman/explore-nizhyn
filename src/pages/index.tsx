@@ -4,17 +4,27 @@ import Layout from '@components/Layout';
 import PostList from '@components/PostList';
 import { useGetPostList } from '@hooks/useGetPostList';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
+import { Fragment } from 'react';
 
 const Home: NextPage = () => {
-  const [posts, error] = useGetPostList();
+  const { data, error, isLoading, fetchNextPage } = useGetPostList();
 
   const renderPosts = () => {
-    if (posts) {
-      return <PostList posts={posts} />;
+    if (isLoading) {
+      return <>Load...</>;
     } else if (error) {
-      return <div>{error.message}</div>;
-    } else {
-      return <div>Зачекайте...</div>;
+      return <div>{(error as Error).message}</div>;
+    } else if (data?.pages) {
+      return (
+        <>
+          {data.pages.map((posts, i) => (
+            <Fragment key={i}>
+              <PostList posts={posts} />
+            </Fragment>
+          ))}
+          <button onClick={() => fetchNextPage()}>load more</button>
+        </>
+      );
     }
   };
   return (
@@ -27,7 +37,7 @@ const Home: NextPage = () => {
 export const getPosts = async (searchQuery?: string) => {
   return searchQuery
     ? await db.getSearchedPostList(searchQuery as string)
-    : await db.getPostList();
+    : await db.getPostList(0);
 };
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {

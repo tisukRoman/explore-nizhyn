@@ -44,7 +44,7 @@ const PostCard: FC<PostCardProps> = ({ post, index }) => {
   ];
 
   const buttonsToRender =
-    user?.id === post.profiles.id ? buttons : [buttons[0]];
+    user?.id === post.profiles?.id ? buttons : [buttons[0]];
 
   return (
     <motion.div
@@ -80,14 +80,14 @@ const PostCard: FC<PostCardProps> = ({ post, index }) => {
         <div className='w-12 h-12 rounded-full overflow-hidden relative'>
           <Image
             unoptimized
-            src={post.profiles.avatar_url || '/images/user.png'}
+            src={post.profiles?.avatar_url || '/images/user.png'}
             alt='Author Avatar'
             layout='fill'
             objectFit='contain'
           />
         </div>
         <div className='text-white ml-4 font-light hover-green'>
-          {post.profiles.username}
+          {post.profiles?.username}
         </div>
       </div>
       <div className='absolute top-4 right-4 flex justify-center items-center cursor-pointer text-3xl lg:opacity-0 lg:-translate-y-10 group-hover:opacity-60 group-hover:translate-y-0 transition-all duration-700'>

@@ -1,19 +1,14 @@
-import { PostgrestError } from '@supabase/supabase-js';
-import { useQuery } from '@tanstack/react-query';
-import { Post } from '@utils/types';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { db } from '@utils/db';
 
-export const useGetPostList = (): [
-  Post[] | undefined,
-  PostgrestError | null
-] => {
-  const { data, error } = useQuery<Post[], PostgrestError>(
+export const useGetPostList = () => {
+  return useInfiniteQuery(
     ['posts'],
-    db.getPostList,
+    ({ pageParam = 0 }) => db.getPostList(pageParam),
     {
-      refetchOnMount: false,
-      refetchOnWindowFocus: false,
+      getNextPageParam: (_, pages) => {
+        return pages.length;
+      },
     }
   );
-  return [data, error];
 };

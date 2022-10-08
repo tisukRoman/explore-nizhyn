@@ -14,14 +14,14 @@ export const CommentList: FC = () => {
       return (
         <ul className='w-full'>
           {comments.map((comment, i) => (
-            <CommentItem key={comment.id} comment={comment} index={i}/>
+            <CommentItem key={comment.id} comment={comment} index={i} />
           ))}
         </ul>
       );
-    } else if (comments && !comments.length) {
-      return <div className='text-slate-300 p-8'>Коментарів немає...</div>;
     } else if (error) {
       return <div>Помилка...</div>;
+    } else {
+      return <></>
     }
   };
 
