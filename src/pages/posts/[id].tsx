@@ -4,7 +4,6 @@ import { dehydrate, QueryClient } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import { db } from '@utils/db';
 import { useGetPost } from '@hooks/useGetPost';
-import { useGetCommentList } from '@hooks/useGetCommentList';
 import Layout from '@components/Layout';
 import Button from '@components/shared/Button';
 import PostCover from '@components/PostCover';
@@ -16,7 +15,6 @@ import { withCSR } from 'hoc/withCSR';
 const PostDetails: NextPage = () => {
   const router = useRouter();
   const [post, isPostFetching, postError] = useGetPost();
-  const [comments, isCommentsFetching, commentsError] = useGetCommentList();
 
   const goBack = () => {
     router.back();
@@ -52,22 +50,12 @@ const PostDetails: NextPage = () => {
     }
   };
 
-  const renderComments = () => {
-    if (comments) {
-      return <CommentList comments={comments} />;
-    } else if (commentsError) {
-      return <div>Не вдалося загрузити коментарі...</div>;
-    } else {
-      return <div>Завантаження...</div>;
-    }
-  };
-
   return (
     <Layout>
       <main className='pt-20 mx-auto lg:max-w-screen-lg shadow-xl shadow-[#1a1a1a]'>
         <>
           {renderPost()}
-          {renderComments()}
+          <CommentList />
         </>
       </main>
     </Layout>

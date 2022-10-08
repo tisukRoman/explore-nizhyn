@@ -24,7 +24,7 @@ export const useCreateComment = (): [
       db.createComment({ post_id: postId, user_id: user?.id, text }),
     {
       onSuccess: () => {
-        client.invalidateQueries(['comments', postId]);
+        client.invalidateQueries(['comments']);
       },
     }
   );

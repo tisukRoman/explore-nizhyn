@@ -76,7 +76,8 @@ export class db {
     const { data, error } = await supabase
       .from<Comment>('comments')
       .select('*, profiles(id, username, avatar_url)')
-      .eq('post_id', postId);
+      .eq('post_id', postId)
+      .order('created_at', { ascending: false });
     if (error) throw error;
     return data;
   }

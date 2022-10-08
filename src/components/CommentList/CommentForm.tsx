@@ -14,10 +14,11 @@ const schema = yup.object({
 });
 
 const CommentForm = () => {
-  const [createComment, createError, isCreating] = useCreateComment();
+  const [createComment, error, isFetching] = useCreateComment();
 
   const {
     register,
+    reset,
     handleSubmit,
     formState: { errors },
   } = useForm<{ text: string }>({
@@ -27,6 +28,9 @@ const CommentForm = () => {
 
   const onSubmit = async (data: { text: string }) => {
     await createComment(data.text);
+    if (!error) {
+      reset({ text: '' });
+    }
   };
 
   return (
@@ -38,11 +42,13 @@ const CommentForm = () => {
         type='text'
         {...register('text')}
         placeholder='Ваш коментар...'
-        disabled={isCreating}
+        disabled={isFetching}
         has_error={errors.text ? 1 : 0}
         error_text={errors.text?.message}
       />
-      <Button type='submit'>Додати коментар</Button>
+      <Button type='submit' disabled={isFetching}>
+        {isFetching ? 'Зачекайте...' : 'Додати коментар'}
+      </Button>
     </form>
   );
 };
