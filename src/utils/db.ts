@@ -42,7 +42,7 @@ export class db {
   }
 
   static async getPostList(page: number = 0) {
-    const limit = 4;
+    const limit = 3;
     const from = page ? page * limit + page : page * limit;
     const to = from + limit;
 

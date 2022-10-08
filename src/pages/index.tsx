@@ -1,28 +1,43 @@
 import type { GetServerSideProps, NextPage } from 'next';
+import { dehydrate, QueryClient } from '@tanstack/react-query';
+import { useGetPostList } from '@hooks/useGetPostList';
+import { AiOutlineArrowDown } from 'react-icons/ai';
 import { db } from '@utils/db';
 import Layout from '@components/Layout';
 import PostList from '@components/PostList';
-import { useGetPostList } from '@hooks/useGetPostList';
-import { dehydrate, QueryClient } from '@tanstack/react-query';
-import { Fragment } from 'react';
 
 const Home: NextPage = () => {
-  const { data, error, isLoading, fetchNextPage } = useGetPostList();
+  const {
+    data,
+    error,
+    isLoading,
+    isFetchingNextPage,
+    fetchNextPage,
+    hasNextPage,
+  } = useGetPostList();
 
   const renderPosts = () => {
     if (isLoading) {
-      return <>Load...</>;
+      return <>Завантаження...</>;
     } else if (error) {
       return <div>{(error as Error).message}</div>;
     } else if (data?.pages) {
       return (
         <>
-          {data.pages.map((posts, i) => (
-            <Fragment key={i}>
-              <PostList posts={posts} />
-            </Fragment>
-          ))}
-          <button onClick={() => fetchNextPage()}>load more</button>
+          <PostList pages={data.pages} />
+          <div
+            onClick={() => fetchNextPage()}
+            className='bg-[#000] w-full h-18 p-8 text-white text-2xl text-center cursor-pointer hover-green flex justify-center items-center'
+          >
+            {isFetchingNextPage || !hasNextPage ? (
+              'Завантаження...'
+            ) : (
+              <>
+                Завантажити ще пости
+                <AiOutlineArrowDown className='ml-4' />
+              </>
+            )}
+          </div>
         </>
       );
     }
