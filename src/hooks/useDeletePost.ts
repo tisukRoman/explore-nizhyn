@@ -4,7 +4,7 @@ import {
   useQueryClient,
 } from '@tanstack/react-query';
 import { PostgrestError } from '@supabase/supabase-js';
-import { db } from '@utils/db';
+import { api } from '@utils/api';
 import { Post } from '@utils/types';
 
 export const useDeletePost = (): [
@@ -14,7 +14,7 @@ export const useDeletePost = (): [
 ] => {
   const client = useQueryClient();
   const { mutateAsync, error, isLoading } = useMutation(
-    (postId: number) => db.deletePost(postId),
+    (postId: number) => api.deletePost(postId),
     {
       onSuccess: () => {
         client.invalidateQueries(['posts']);

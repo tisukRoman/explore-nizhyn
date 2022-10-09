@@ -2,7 +2,7 @@ import * as yup from 'yup';
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
 import { Post, PostData } from '@utils/types';
-import { db } from '@utils/db';
+import { api } from '@utils/api';
 import { motion } from 'framer-motion';
 import { ParsedUrlQuery } from 'querystring';
 import { useForm } from 'react-hook-form';
@@ -129,7 +129,7 @@ interface Params extends ParsedUrlQuery {
 }
 
 export const getStaticPaths: GetStaticPaths<Params> = async () => {
-  const posts = await db.getPostList();
+  const posts = await api.getPostList();
   const paths = posts.map((post) => ({
     params: { id: post.id.toString() },
   }));
@@ -143,7 +143,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const { id: postId } = params as Params;
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery(['post', postId], () =>
-    db.getPostDetails(Number(postId))
+    api.getPostDetails(Number(postId))
   );
   return {
     props: { dehydratedState: dehydrate(queryClient) },

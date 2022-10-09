@@ -10,7 +10,7 @@ import {
   CommentData,
 } from './types';
 
-export class db {
+export class api {
   static async getProfile(id: string) {
     const { data, error } = await supabase
       .from<Profile>('profiles')
@@ -31,12 +31,17 @@ export class db {
     return data;
   }
 
-  static async getAuthorPosts(authorId: string) {
+  static async getAuthorPosts(authorId: string, page: number) {
+    const limit = 3;
+    const from = page ? page * limit + page : page * limit;
+    const to = from + limit;
+
     const { data, error } = await supabase
       .from<Post>('posts')
       .select(`id, title, img_src, tag, profiles(id, avatar_url, username)`)
       .eq('author_id', authorId)
-      .order('created_at', { ascending: false });
+      .order('created_at', { ascending: false })
+      .range(from, to);
     if (error) throw error;
     return data;
   }

@@ -1,7 +1,7 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { PostgrestError } from '@supabase/supabase-js';
 import { Post } from '@utils/types';
-import { db } from '@utils/db';
+import { api } from '@utils/api';
 import { useRouter } from 'next/router';
 
 export const useGetPost = (): [
@@ -14,8 +14,8 @@ export const useGetPost = (): [
   const postId = router.query?.id as string;
 
   const { data, isFetching, error } = useQuery<Post, PostgrestError>(
-    ['post', postId],
-    () => db.getPostDetails(Number(postId)),
+    ['posts', postId],
+    () => api.getPostDetails(Number(postId)),
     {
       placeholderData: () => {
         const initialPosts = client.getQueryData(['posts']) as

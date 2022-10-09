@@ -1,6 +1,6 @@
 import { PostgrestError } from '@supabase/supabase-js';
 import { useQuery } from '@tanstack/react-query';
-import { db } from '@utils/db';
+import { api } from '@utils/api';
 import { Profile } from '@utils/types';
 
 export const useGetAuthorList = (): [
@@ -9,7 +9,7 @@ export const useGetAuthorList = (): [
 ] => {
   const { data, error } = useQuery<Profile[], PostgrestError>(
     ['authors'],
-    db.getAuthorsList,
+    api.getAuthorsList,
     {
       refetchOnMount: false,
       refetchOnWindowFocus: false,

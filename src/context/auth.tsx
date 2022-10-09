@@ -8,19 +8,19 @@ import {
 } from 'react';
 import { supabase } from '@utils/supabaseClient';
 import { User } from '@supabase/supabase-js';
-import { db } from '@utils/db';
+import { api } from '@utils/api';
 
 type AuthContextType = {
-  signUp: typeof db.signUp;
-  signIn: typeof db.login;
-  signOut: typeof db.logout;
+  signUp: typeof api.signUp;
+  signIn: typeof api.login;
+  signOut: typeof api.logout;
   user: User | null;
 };
 
 export const AuthContext = createContext<AuthContextType>({
-  signUp: db.signUp,
-  signIn: db.login,
-  signOut: db.logout,
+  signUp: api.signUp,
+  signIn: api.login,
+  signOut: api.logout,
   user: null,
 });
 
@@ -52,9 +52,9 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
 
   const value = useMemo(
     () => ({
-      signUp: db.signUp,
-      signIn: db.login,
-      signOut: db.logout,
+      signUp: api.signUp,
+      signIn: api.login,
+      signOut: api.logout,
       user,
     }),
     [user]

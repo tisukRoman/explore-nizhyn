@@ -2,7 +2,7 @@ import type { GetServerSideProps, NextPage } from 'next';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
 import { useGetPostList } from '@hooks/useGetPostList';
 import { AiOutlineArrowDown } from 'react-icons/ai';
-import { db } from '@utils/db';
+import { api } from '@utils/api';
 import Layout from '@components/Layout';
 import PostList from '@components/PostList';
 
@@ -51,8 +51,8 @@ const Home: NextPage = () => {
 
 export const getPosts = async (searchQuery?: string) => {
   return searchQuery
-    ? await db.getSearchedPostList(searchQuery as string)
-    : await db.getPostList(0);
+    ? await api.getSearchedPostList(searchQuery as string)
+    : await api.getPostList(0);
 };
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {

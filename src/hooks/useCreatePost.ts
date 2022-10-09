@@ -5,7 +5,7 @@ import {
 } from '@tanstack/react-query';
 import { PostgrestError } from '@supabase/supabase-js';
 import { Post, PostData } from '@utils/types';
-import { db } from '@utils/db';
+import { api } from '@utils/api';
 import { useRouter } from 'next/router';
 
 export const useCreatePost = (): [
@@ -16,7 +16,7 @@ export const useCreatePost = (): [
   const client = useQueryClient();
   const router = useRouter();
   const { mutateAsync, error, isLoading } = useMutation(
-    (postData: PostData) => db.createPost(postData),
+    (postData: PostData) => api.createPost(postData),
     {
       onSuccess: () => {
         client.invalidateQueries(['posts']);

@@ -2,7 +2,7 @@ import { GetServerSideProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
-import { db } from '@utils/db';
+import { api } from '@utils/api';
 import { useGetPost } from '@hooks/useGetPost';
 import Layout from '@components/Layout';
 import Button from '@components/shared/Button';
@@ -67,7 +67,7 @@ export const getServerSideProps: GetServerSideProps = withCSR(
     const id = ctx.params.id as string;
     const queryClient = new QueryClient();
     await queryClient.prefetchQuery(['post', id], () =>
-      db.getPostDetails(Number(id))
+      api.getPostDetails(Number(id))
     );
     return {
       props: {

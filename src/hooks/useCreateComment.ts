@@ -4,7 +4,7 @@ import {
   useMutation,
   useQueryClient,
 } from '@tanstack/react-query';
-import { db } from '@utils/db';
+import { api } from '@utils/api';
 import { Comment } from '@utils/types';
 import { useRouter } from 'next/router';
 import { useAuth } from './useAuth';
@@ -21,7 +21,7 @@ export const useCreateComment = (): [
 
   const { mutateAsync, error, isLoading } = useMutation(
     (text: string) =>
-      db.createComment({ post_id: postId, user_id: user?.id, text }),
+      api.createComment({ post_id: postId, user_id: user?.id, text }),
     {
       onSuccess: () => {
         client.invalidateQueries(['comments']);

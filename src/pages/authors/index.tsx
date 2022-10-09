@@ -1,7 +1,7 @@
 import type { GetStaticProps, NextPage } from 'next';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
 import { useGetAuthorList } from '@hooks/useGetAuthorList';
-import { db } from '@utils/db';
+import { api } from '@utils/api';
 import Layout from '@components/Layout';
 import AuthorList from '@components/AuthorList';
 
@@ -27,7 +27,7 @@ const Authors: NextPage = () => {
 
 export const getStaticProps: GetStaticProps = async () => {
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery(['authors'], db.getAuthorsList);
+  await queryClient.prefetchQuery(['authors'], api.getAuthorsList);
   return {
     props: { dehydratedState: dehydrate(queryClient) },
   };

@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Profile } from '@utils/types';
-import { db } from '@utils/db';
+import { api } from '@utils/api';
 import { useAuth } from '@hooks/useAuth';
 import { useToggle } from '@hooks/useToggle';
 import { FiMenu } from 'react-icons/fi';
@@ -27,7 +27,7 @@ export const Header: FC = () => {
     async function loadProfile() {
       const profileId = user?.id;
       if (profileId) {
-        const data = await db.getProfile(profileId);
+        const data = await api.getProfile(profileId);
         setProfile(data);
       }
     }
