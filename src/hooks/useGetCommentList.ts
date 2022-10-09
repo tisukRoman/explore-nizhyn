@@ -4,17 +4,11 @@ import { useRouter } from 'next/router';
 import { Comment } from '@utils/types';
 import { api } from '@utils/api';
 
-export const useGetCommentList = (): [
-  Comment[] | undefined,
-  boolean,
-  PostgrestError | null
-] => {
+export const useGetCommentList = () => {
   const router = useRouter();
   const postId = router.query?.id as string;
 
-  const { data, isFetching, error } = useQuery<Comment[], PostgrestError>(
-    ['comments', postId],
-    () => api.getPostComments(Number(postId))
+  return useQuery<Comment[], PostgrestError>(['comments', postId], () =>
+    api.getPostComments(Number(postId))
   );
-  return [data, isFetching, error];
 };

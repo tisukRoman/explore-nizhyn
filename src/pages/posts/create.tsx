@@ -1,16 +1,16 @@
 import * as yup from 'yup';
 import { NextPage } from 'next';
+import { PostData } from '@utils/types';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRedirect } from '@hooks/useRedirect';
+import { useCreatePost } from '@hooks/useCreatePost';
 import { useAuth } from '@hooks/useAuth';
-import Layout from '@components/Layout';
 import TextEditor from '@components/TextEditor';
 import TextInput from '@components/shared/TextInput';
 import PageTitle from '@components/shared/PageTitle';
 import Button from '@components/shared/Button';
-import { PostData } from '@utils/types';
-import { useCreatePost } from '@hooks/useCreatePost';
+import Layout from '@components/Layout';
 
 const schema = yup.object({
   title: yup.string().required(`Заголовок обов'язково`),
@@ -36,7 +36,7 @@ const CreatePost: NextPage = () => {
     mode: 'onChange',
   });
 
-  const [createPost, createError, isCreating] = useCreatePost();
+  const { mutateAsync: createPost, isLoading, error } = useCreatePost();
 
   const onSubmit = async (data: PostData) => {
     if (data.content && user?.id) {
@@ -46,7 +46,7 @@ const CreatePost: NextPage = () => {
 
   const renderError = () => {
     return (
-      createError && (
+      error && (
         <div className='text-red-500 text-lg font-bold my-8'>
           Помилка створення посту
         </div>
@@ -58,15 +58,17 @@ const CreatePost: NextPage = () => {
     <Layout>
       <div className='pt-20 min-h-screen w-full mx-auto md:max-w-screen-lg'>
         <div className='my-6 px-4'>
-          <PageTitle>Створити Пост</PageTitle>
-          {renderError()}
+          <>
+            <PageTitle>Створити Пост</PageTitle>
+            {renderError()}
+          </>
         </div>
         <form onSubmit={handleSubmit(onSubmit)}>
           <TextInput
             type='text'
             {...register('title')}
             placeholder='Заголовок посту...'
-            disabled={isCreating}
+            disabled={isLoading}
             has_error={errors.title ? 1 : 0}
             error_text={errors.title?.message}
           />
@@ -74,7 +76,7 @@ const CreatePost: NextPage = () => {
             type='text'
             {...register('tag')}
             placeholder='Назва категорії...'
-            disabled={isCreating}
+            disabled={isLoading}
             has_error={errors.tag ? 1 : 0}
             error_text={errors.tag?.message}
           />
@@ -82,7 +84,7 @@ const CreatePost: NextPage = () => {
             type='text'
             {...register('img_src')}
             placeholder='Введіть url картинки...'
-            disabled={isCreating}
+            disabled={isLoading}
             has_error={errors.img_src ? 1 : 0}
             error_text={errors.img_src?.message}
           />
@@ -90,13 +92,13 @@ const CreatePost: NextPage = () => {
             type='text'
             {...register('description')}
             placeholder='Короткий опис...'
-            disabled={isCreating}
+            disabled={isLoading}
             has_error={errors.description ? 1 : 0}
             error_text={errors.description?.message}
           />
           <TextEditor name='content' control={control} />
-          <Button type='submit' disabled={isCreating}>
-            {isCreating ? 'Зачекайте...' : 'Створити Пост'}
+          <Button type='submit' disabled={isLoading}>
+            {isLoading ? 'Зачекайте...' : 'Створити Пост'}
           </Button>
         </form>
       </div>

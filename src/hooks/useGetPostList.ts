@@ -1,8 +1,10 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
+import { PostgrestError } from '@supabase/supabase-js';
+import { Post } from '@utils/types';
 import { api } from '@utils/api';
 
-export const useGetPostList = () => {
-  return useInfiniteQuery(
+export const useGetPostList = () =>
+  useInfiniteQuery<Post[], PostgrestError, Post[], string[]>(
     ['posts'],
     ({ pageParam = 0 }) => api.getPostList(pageParam),
     {
@@ -11,4 +13,3 @@ export const useGetPostList = () => {
       },
     }
   );
-};

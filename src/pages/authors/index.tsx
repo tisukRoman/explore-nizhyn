@@ -6,7 +6,7 @@ import Layout from '@components/Layout';
 import AuthorList from '@components/AuthorList';
 
 const Authors: NextPage = () => {
-  const [authors, error] = useGetAuthorList();
+  const { data: authors, error } = useGetAuthorList();
 
   const renderAuthorList = () => {
     if (authors) {

@@ -4,20 +4,16 @@ import { Post } from '@utils/types';
 import { api } from '@utils/api';
 import { useRouter } from 'next/router';
 
-export const useGetPost = (): [
-  Post | undefined,
-  boolean,
-  PostgrestError | null
-] => {
+export const useGetPost = () => {
   const client = useQueryClient();
   const router = useRouter();
   const postId = router.query?.id as string;
 
-  const { data, isFetching, error } = useQuery<Post, PostgrestError>(
+  return useQuery<Post, PostgrestError>(
     ['posts', postId],
     () => api.getPostDetails(Number(postId)),
     {
-      placeholderData: () => {
+      initialData: () => {
         const initialData = client.getQueryData(['posts']) as
           | { pages: Post[][] }
           | undefined;
@@ -31,5 +27,4 @@ export const useGetPost = (): [
       },
     }
   );
-  return [data, isFetching, error];
 };

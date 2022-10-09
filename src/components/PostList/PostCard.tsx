@@ -19,7 +19,7 @@ const PostCard: FC<PostCardProps> = ({ post, index }) => {
   const router = useRouter();
   const { user } = useAuth();
 
-  const [deletePost] = useDeletePost();
+  const { mutateAsync: deletePost } = useDeletePost();
 
   const onCopyLink = () => {
     window.navigator.clipboard.writeText(`${baseURL}/posts/${post.id}`);

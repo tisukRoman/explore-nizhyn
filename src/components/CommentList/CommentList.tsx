@@ -4,10 +4,10 @@ import CommentForm from './CommentForm';
 import { useGetCommentList } from '@hooks/useGetCommentList';
 
 export const CommentList: FC = () => {
-  const [comments, isFetching, error] = useGetCommentList();
+  const { data: comments, isLoading, error } = useGetCommentList();
 
   const renderList = () => {
-    if (isFetching) {
+    if (isLoading) {
       return <div>Завантаження Коментарів...</div>;
     }
     if (comments && comments.length) {
@@ -21,7 +21,7 @@ export const CommentList: FC = () => {
     } else if (error) {
       return <div>Помилка...</div>;
     } else {
-      return <></>
+      return <></>;
     }
   };
 

@@ -1,11 +1,11 @@
 import { GetServerSideProps, NextPage } from 'next';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
+import { BiArrowBack } from 'react-icons/bi';
 import { useRouter } from 'next/router';
 import { motion } from 'framer-motion';
 import { useGetPost } from '@hooks/useGetPost';
 import { withCSR } from 'hoc/withCSR';
 import { api } from '@utils/api';
-import { BiArrowBack } from 'react-icons/bi';
 import Layout from '@components/Layout';
 import Button from '@components/shared/Button';
 import PostCover from '@components/PostCover';
@@ -14,7 +14,7 @@ import CommentList from '@components/CommentList';
 
 const PostDetails: NextPage = () => {
   const router = useRouter();
-  const [post, isPostFetching, postError] = useGetPost();
+  const { data: post, isLoading, error } = useGetPost();
 
   const goBack = () => {
     router.back();
@@ -26,7 +26,7 @@ const PostDetails: NextPage = () => {
         <>
           <PostCover post={post} />
           <article className='text-slate-200 p-2 md:p-6'>
-            {!post.content || isPostFetching ? (
+            {!post.content || isLoading ? (
               <p>Завантаження...</p>
             ) : (
               <motion.div
@@ -43,8 +43,8 @@ const PostDetails: NextPage = () => {
           </article>
         </>
       );
-    } else if (postError) {
-      return <div>{postError.message}</div>;
+    } else if (error) {
+      return <div>{error.message}</div>;
     } else {
       return <div>Завантаження...</div>;
     }

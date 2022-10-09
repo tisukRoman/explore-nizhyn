@@ -31,8 +31,8 @@ const EditPost: NextPage = () => {
   const { user } = useAuth();
   useRedirect(user);
 
-  const [post, isFetching, error] = useGetPost();
-  const [editPost, editError, isEditing] = useEditPost();
+  const { data: post, error } = useGetPost();
+  const { mutateAsync: edit, isLoading } = useEditPost();
 
   const {
     control,
@@ -49,7 +49,7 @@ const EditPost: NextPage = () => {
     const { profiles, ...postData } = data as Post;
 
     if (postData.content && user?.id) {
-      await editPost({ ...postData, author_id: user.id });
+      await edit({ ...postData, author_id: user.id });
     }
   };
 
@@ -61,7 +61,7 @@ const EditPost: NextPage = () => {
             type='text'
             {...register('title')}
             placeholder='Заголовок посту...'
-            disabled={isEditing}
+            disabled={isLoading}
             has_error={errors.title ? 1 : 0}
             error_text={errors.title?.message}
           />
@@ -69,7 +69,7 @@ const EditPost: NextPage = () => {
             type='text'
             {...register('tag')}
             placeholder='Назва категорії...'
-            disabled={isEditing}
+            disabled={isLoading}
             has_error={errors.tag ? 1 : 0}
             error_text={errors.tag?.message}
           />
@@ -77,7 +77,7 @@ const EditPost: NextPage = () => {
             type='text'
             {...register('img_src')}
             placeholder='Введіть url картинки...'
-            disabled={isEditing}
+            disabled={isLoading}
             has_error={errors.img_src ? 1 : 0}
             error_text={errors.img_src?.message}
           />
@@ -85,11 +85,11 @@ const EditPost: NextPage = () => {
             type='text'
             {...register('description')}
             placeholder='Короткий опис...'
-            disabled={isEditing}
+            disabled={isLoading}
             has_error={errors.description ? 1 : 0}
             error_text={errors.description?.message}
           />
-          {isFetching ? (
+          {isLoading ? (
             <p className='text-white'>Завантаження...</p>
           ) : (
             <motion.div
@@ -100,8 +100,8 @@ const EditPost: NextPage = () => {
               <TextEditor name='content' control={control} />
             </motion.div>
           )}
-          <Button type='submit' disabled={isEditing}>
-            {isEditing ? 'Зачекайте' : 'Зберегти зміни'}
+          <Button type='submit' disabled={isLoading}>
+            {isLoading ? 'Зачекайте' : 'Зберегти зміни'}
           </Button>
         </form>
       );

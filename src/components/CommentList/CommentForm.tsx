@@ -1,9 +1,9 @@
 import * as yup from 'yup';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useCreateComment } from '@hooks/useCreateComment';
 import TextInput from '@components/shared/TextInput';
 import Button from '@components/shared/Button';
-import { useForm } from 'react-hook-form';
-import { useCreateComment } from '@hooks/useCreateComment';
-import { yupResolver } from '@hookform/resolvers/yup';
 
 const schema = yup.object({
   text: yup
@@ -14,7 +14,7 @@ const schema = yup.object({
 });
 
 const CommentForm = () => {
-  const [createComment, error, isFetching] = useCreateComment();
+  const { mutateAsync: addComment, isLoading, error } = useCreateComment();
 
   const {
     register,
@@ -27,7 +27,7 @@ const CommentForm = () => {
   });
 
   const onSubmit = async (data: { text: string }) => {
-    await createComment(data.text);
+    await addComment(data.text);
     if (!error) {
       reset({ text: '' });
     }
@@ -42,12 +42,12 @@ const CommentForm = () => {
         type='text'
         {...register('text')}
         placeholder='Ваш коментар...'
-        disabled={isFetching}
+        disabled={isLoading}
         has_error={errors.text ? 1 : 0}
         error_text={errors.text?.message}
       />
-      <Button type='submit' disabled={isFetching}>
-        {isFetching ? 'Зачекайте...' : 'Додати коментар'}
+      <Button type='submit' disabled={isLoading}>
+        {isLoading ? 'Зачекайте...' : 'Додати коментар'}
       </Button>
     </form>
   );
