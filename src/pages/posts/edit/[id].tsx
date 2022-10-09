@@ -142,7 +142,7 @@ export const getStaticPaths: GetStaticPaths<Params> = async () => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const { id: postId } = params as Params;
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery(['post', postId], () =>
+  await queryClient.prefetchQuery(['posts', postId], () =>
     api.getPostDetails(Number(postId))
   );
   return {

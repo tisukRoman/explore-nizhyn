@@ -18,11 +18,15 @@ export const useGetPost = (): [
     () => api.getPostDetails(Number(postId)),
     {
       placeholderData: () => {
-        const initialPosts = client.getQueryData(['posts']) as
-          | Post[]
+        const initialData = client.getQueryData(['posts']) as
+          | { pages: Post[][] }
           | undefined;
-        if (initialPosts) {
-          return initialPosts.find((post) => String(post.id) === postId);
+        if (initialData) {
+          return initialData?.pages
+            .reduce((posts, page) => {
+              return [...posts, ...page];
+            }, [])
+            .find((post) => String(post.id) === postId);
         }
       },
     }

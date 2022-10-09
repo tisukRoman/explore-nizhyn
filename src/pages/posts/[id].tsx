@@ -1,16 +1,16 @@
 import { GetServerSideProps, NextPage } from 'next';
-import { useRouter } from 'next/router';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
+import { useRouter } from 'next/router';
 import { motion } from 'framer-motion';
-import { api } from '@utils/api';
 import { useGetPost } from '@hooks/useGetPost';
+import { withCSR } from 'hoc/withCSR';
+import { api } from '@utils/api';
+import { BiArrowBack } from 'react-icons/bi';
 import Layout from '@components/Layout';
 import Button from '@components/shared/Button';
 import PostCover from '@components/PostCover';
 import TextViewer from '@components/TextViewer';
 import CommentList from '@components/CommentList';
-import { BiArrowBack } from 'react-icons/bi';
-import { withCSR } from 'hoc/withCSR';
 
 const PostDetails: NextPage = () => {
   const router = useRouter();
@@ -66,7 +66,7 @@ export const getServerSideProps: GetServerSideProps = withCSR(
   async (ctx: any) => {
     const id = ctx.params.id as string;
     const queryClient = new QueryClient();
-    await queryClient.prefetchQuery(['post', id], () =>
+    await queryClient.prefetchQuery(['posts', id], () =>
       api.getPostDetails(Number(id))
     );
     return {
