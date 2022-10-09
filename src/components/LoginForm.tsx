@@ -19,6 +19,11 @@ type LoginProps = {
   isLoading: boolean;
 };
 
+type InputData = {
+  name: 'email' | 'password';
+  placeholder: string;
+};
+
 const LoginForm: FC<LoginProps> = ({ onSubmit, isLoading }) => {
   const {
     register,
@@ -26,27 +31,27 @@ const LoginForm: FC<LoginProps> = ({ onSubmit, isLoading }) => {
     formState: { errors },
   } = useForm<LoginData>({ mode: 'onBlur', resolver: yupResolver(schema) });
 
+  const inputs: InputData[] = [
+    { name: 'email', placeholder: 'Введіть email...' },
+    { name: 'password', placeholder: 'Введіть пароль...' },
+  ];
+
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
       className='w-full h-80 mx-auto md:max-w-screen-sm'
     >
-      <TextInput
-        type='email'
-        {...register('email')}
-        placeholder='Введіть email...'
-        disabled={isLoading}
-        has_error={errors.email ? 1 : 0}
-        error_text={errors.email?.message}
-      />
-      <TextInput
-        type='password'
-        {...register('password')}
-        placeholder='Введіть пароль...'
-        disabled={isLoading}
-        has_error={errors.password ? 1 : 0}
-        error_text={errors.password?.message}
-      />
+      {inputs.map((input) => (
+        <TextInput
+          key={input.name}
+          type={input.name}
+          {...register(input.name)}
+          placeholder={input.placeholder}
+          disabled={isLoading}
+          has_error={errors[input.name] ? 1 : 0}
+          error_text={errors[input.name]?.message}
+        />
+      ))}
       <Button type='submit' disabled={isLoading}>
         {isLoading ? 'Зачекайте...' : 'Увійти'}
       </Button>

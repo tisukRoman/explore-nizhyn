@@ -1,13 +1,13 @@
 import { useMutation } from '@tanstack/react-query';
-import { LoginData } from '@utils/types';
+import { SignUpData } from '@utils/types';
 import { useRouter } from 'next/router';
 import { useAuth } from './useAuth';
 
-export const useLogin = () => {
+export const useRegister = () => {
   const router = useRouter();
-  const { signIn } = useAuth();
+  const { signUp } = useAuth();
 
-  return useMutation((loginData: LoginData) => signIn(loginData), {
+  return useMutation((registerData: SignUpData) => signUp(registerData), {
     onSuccess: () => router.push('/'),
   });
 };
