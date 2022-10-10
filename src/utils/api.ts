@@ -60,14 +60,19 @@ export class api {
     return data;
   }
 
-  static async getSearchedPostList(query: string) {
+  static async getSearchedPostList(temp: string, page: number = 0) {
+    const limit = 3;
+    const from = page ? page * limit + page : page * limit;
+    const to = from + limit;
+
     const { data, error } = await supabase
       .from<Post>('posts')
       .select(`id, title, img_src, tag, profiles(id, avatar_url, username)`)
       .or(
-        `or(title.ilike.%${query}%, tag.ilike.%${query}%), description.ilike.%${query}%`
+        `or(title.ilike.%${temp}%, tag.ilike.%${temp}%), description.ilike.%${temp}%`
       )
-      .order('created_at', { ascending: false });
+      .order('created_at', { ascending: false })
+      .range(from, to);
     if (error) throw error;
     return data;
   }

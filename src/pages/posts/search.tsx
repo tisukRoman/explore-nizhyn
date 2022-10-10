@@ -1,27 +1,27 @@
-import type { GetServerSideProps, NextPage } from 'next';
+import { GetServerSideProps } from 'next';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
-import { useGetPostList } from '@hooks/useGetPostList';
+import { useGetSearchedPosts } from '@hooks/useGetSearchedPosts';
 import { AiOutlineArrowDown } from 'react-icons/ai';
-import { api } from '@utils/api';
-import Layout from '@components/Layout';
 import PostList from '@components/PostList';
+import Layout from '@components/Layout';
+import { api } from '@utils/api';
 
-const Home: NextPage = () => {
+const SearchPosts = () => {
   const {
     data,
-    error,
     isLoading,
-    isFetchingNextPage,
+    error,
     fetchNextPage,
+    isFetchingNextPage,
     hasNextPage,
-  } = useGetPostList();
+  } = useGetSearchedPosts();
 
   const renderPosts = () => {
     if (isLoading) {
       return <>Завантаження...</>;
     } else if (error) {
       return <div>{error.message}</div>;
-    } else if (data?.pages) {
+    } else if (data?.pages && data.pages[0].length) {
       return (
         <>
           <PostList pages={data.pages} />
@@ -40,6 +40,8 @@ const Home: NextPage = () => {
           </div>
         </>
       );
+    }else{
+      return <div className='text-white text-2xl text-center m-12'>Не знайдено...</div>
     }
   };
   return (
@@ -49,9 +51,12 @@ const Home: NextPage = () => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const temp = (ctx.query.q || '') as string;
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery(['posts'], () => api.getPostList(0));
+  await queryClient.prefetchQuery(['posts', 'search', temp], () =>
+    api.getSearchedPostList(temp, 0)
+  );
   return {
     props: {
       dehydratedState: dehydrate(queryClient),
@@ -59,4 +64,4 @@ export const getServerSideProps: GetServerSideProps = async () => {
   };
 };
 
-export default Home;
+export default SearchPosts;

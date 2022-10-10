@@ -66,7 +66,9 @@ export const Header: FC = () => {
   const onSearch = (e: Event) => {
     if ((e as KeyboardEvent).key === 'Enter' || e.type === 'click') {
       toggleSearchModal(false);
-      router.push(`/?q=${searchValue}`);
+      searchValue.trim()
+        ? router.push(`/posts/search?q=${searchValue}`)
+        : router.push('/');
     }
   };
 
