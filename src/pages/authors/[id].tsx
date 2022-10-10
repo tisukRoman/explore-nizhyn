@@ -1,8 +1,8 @@
 import { GetServerSideProps, NextPage } from 'next';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
-import { AiOutlineArrowDown } from 'react-icons/ai';
 import { useGetAuthorPosts } from '@hooks/useGetAuthorPosts';
 import { useGetProfile } from '@hooks/useGetProfile';
+import LoadMoreButton from '@components/shared/LoadMoreButton';
 import AuthorCover from '@components/AuthorCover';
 import PostList from '@components/PostList';
 import Layout from '@components/Layout';
@@ -32,19 +32,10 @@ const AuthorPage: NextPage = () => {
       return (
         <>
           <PostList pages={data.pages} />
-          <div
+          <LoadMoreButton
             onClick={() => fetchNextPage()}
-            className='bg-[#000] w-full h-18 p-8 text-white text-2xl text-center cursor-pointer hover-green flex justify-center items-center'
-          >
-            {isFetchingNextPage || !hasNextPage ? (
-              'Завантаження...'
-            ) : (
-              <>
-                Завантажити ще пости
-                <AiOutlineArrowDown className='ml-4' />
-              </>
-            )}
-          </div>
+            isLoading={isFetchingNextPage || !hasNextPage}
+          />
         </>
       );
     }
