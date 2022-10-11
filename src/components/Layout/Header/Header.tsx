@@ -40,6 +40,12 @@ export const Header: FC = () => {
     router.push('/');
   };
 
+  const onProfile = () => {
+    if (user) {
+      router.push(`/auth/${user.id}`);
+    }
+  };
+
   const renderMobileModal = () => {
     if (mobileModal) {
       return <HeaderMobileModal onClose={() => toggleMobileModal(false)} />;
@@ -112,13 +118,14 @@ export const Header: FC = () => {
               >
                 <AiOutlineLogout />
               </div>
-              <div className='ml-5 md:ml-8 overflow-hidden relative w-9 h-9 rounded-full'>
+              <div
+                onClick={onProfile}
+                className='ml-5 md:ml-8 overflow-hidden relative w-9 h-9 rounded-full cursor-pointer'
+              >
                 <Image
                   unoptimized
                   title={profile.username}
-                  src={
-                    profile.avatar_url ? profile.avatar_url : '/images/user.png'
-                  }
+                  src={profile.avatar_url || '/images/user.png'}
                   alt='user avatar'
                   layout='fill'
                   className='object-cover w-full h-full'

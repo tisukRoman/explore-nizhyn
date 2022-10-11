@@ -23,11 +23,11 @@ export const Layout: FC<LayoutProps> = (props) => {
         <meta name='keywords' content={keywords} />
         <link rel='icon' type='image/x-icon' href='/favicon.ico' />
       </Head>
-      <>
+      <div className='flex flex-col min-h-screen'>
         <Header />
-        {children}
+        <div className='grow'>{children}</div>
         <Footer />
-      </>
+      </div>
     </>
   );
 };
