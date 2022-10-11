@@ -1,3 +1,4 @@
+import { getPageRange } from './getPageRange';
 import { supabase } from './supabaseClient';
 import {
   SignUpData,
@@ -32,9 +33,7 @@ export class api {
   }
 
   static async getAuthorPosts(authorId: string, page: number) {
-    const limit = 3;
-    const from = page ? page * limit + page : page * limit;
-    const to = from + limit;
+    const [from, to] = getPageRange(page);
 
     const { data, error } = await supabase
       .from<Post>('posts')
@@ -47,9 +46,7 @@ export class api {
   }
 
   static async getPostList(page: number = 0) {
-    const limit = 3;
-    const from = page ? page * limit + page : page * limit;
-    const to = from + limit;
+    const [from, to] = getPageRange(page);
 
     const { data, error } = await supabase
       .from<Post>('posts')
@@ -61,9 +58,7 @@ export class api {
   }
 
   static async getSearchedPostList(temp: string, page: number = 0) {
-    const limit = 3;
-    const from = page ? page * limit + page : page * limit;
-    const to = from + limit;
+    const [from, to] = getPageRange(page);
 
     const { data, error } = await supabase
       .from<Post>('posts')

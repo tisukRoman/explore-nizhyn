@@ -27,7 +27,9 @@ const SearchPosts = () => {
           <PostList pages={data.pages} />
           <LoadMoreButton
             onClick={() => fetchNextPage()}
-            isLoading={isFetchingNextPage || !hasNextPage}
+            isLoading={isFetchingNextPage}
+            isListEnd={!hasNextPage}
+            disabled={isFetchingNextPage || !hasNextPage}
           />
         </>
       );

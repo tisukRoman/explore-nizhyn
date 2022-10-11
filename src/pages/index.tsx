@@ -1,10 +1,10 @@
 import type { GetServerSideProps, NextPage } from 'next';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
 import { useGetPostList } from '@hooks/useGetPostList';
-import { api } from '@utils/api';
-import Layout from '@components/Layout';
-import PostList from '@components/PostList';
 import LoadMoreButton from '@components/shared/LoadMoreButton';
+import PostList from '@components/PostList';
+import Layout from '@components/Layout';
+import { api } from '@utils/api';
 
 const Home: NextPage = () => {
   const {
@@ -27,7 +27,9 @@ const Home: NextPage = () => {
           <PostList pages={data.pages} />
           <LoadMoreButton
             onClick={() => fetchNextPage()}
-            isLoading={isFetchingNextPage || !hasNextPage}
+            isLoading={isFetchingNextPage}
+            isListEnd={!hasNextPage}
+            disabled={isFetchingNextPage || !hasNextPage}
           />
         </>
       );
