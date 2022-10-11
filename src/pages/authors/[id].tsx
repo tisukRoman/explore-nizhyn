@@ -27,7 +27,7 @@ const AuthorPage: NextPage = () => {
     if (isLoading) {
       return <>Завантаження...</>;
     } else if (error) {
-      return <div>{(error as Error).message}</div>;
+      return <div>{error.message}</div>;
     } else if (data?.pages) {
       return (
         <>

@@ -6,6 +6,8 @@ import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import TextInput from './shared/TextInput';
+import Button from './shared/Button';
+import { useEditProfile } from '@hooks/useEditProfile';
 
 const schema = yup.object({
   username: yup
@@ -23,10 +25,7 @@ type InputData = {
   placeholder: string;
 };
 
-const ProfileForm: FC<{ profile: Profile; isLoading: boolean }> = ({
-  profile,
-  isLoading,
-}) => {
+const ProfileForm: FC<{ profile: Profile }> = ({ profile }) => {
   const {
     register,
     handleSubmit,
@@ -37,8 +36,10 @@ const ProfileForm: FC<{ profile: Profile; isLoading: boolean }> = ({
     defaultValues: profile,
   });
 
-  const onSubmit = (data: Profile) => {
-    console.log(data);
+  const { mutateAsync: edit, isLoading: isEditing } = useEditProfile();
+
+  const onSubmit = async (data: Profile) => {
+    await edit(data);
   };
 
   const inputs: InputData[] = [
@@ -50,27 +51,23 @@ const ProfileForm: FC<{ profile: Profile; isLoading: boolean }> = ({
   ];
 
   return (
-    <div className='w-full pt-16 h-screen bg-[#000] relative'>
+    <div className='w-full pt-16 h-screen bg-[#000] relative flex justify-center'>
       <Image
         unoptimized
-        src={
-          profile.wallpaper_url
-            ? profile.wallpaper_url
-            : '/images/placeholder.png'
-        }
+        src={profile.wallpaper_url || '/images/placeholder.png'}
         alt={profile.username}
         layout='fill'
-        className='h-full object-cover opacity-60 '
+        className='h-full object-cover opacity-60'
       />
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className='w-[90%] md:w-[70%] lg:w-[50%] left-1/2 -translate-x-1/2 flex justify-between items-center absolute flex-col lg:mx-auto lg:flex-row'
+        className='w-[90%] md:w-[70%] lg:w-[50%] flex justify-between items-center absolute flex-col lg:flex-row'
       >
         <motion.div
           initial={{ opacity: 0, translateX: -50 }}
           animate={{ opacity: 1, translateX: 0 }}
           transition={{ duration: 0.5 }}
-          className='flex justify-center items-center flex-col md:flex-row'
+          className='flex items-center flex-col ali gap-8 lg:gap-20 md:flex-row'
         >
           <div className='w-32 h-32 relative rounded-full overflow-hidden shrink-0'>
             <Image
@@ -81,18 +78,21 @@ const ProfileForm: FC<{ profile: Profile; isLoading: boolean }> = ({
               className='h-full object-cover'
             />
           </div>
-          <div className='text-white ml-4'>
+          <div className='text-white grow flex flex-col'>
             {inputs.map(({ name, placeholder }) => (
               <TextInput
                 key={name}
                 type='text'
                 {...register(name)}
                 placeholder={placeholder}
-                disabled={isLoading}
+                disabled={isEditing}
                 has_error={errors.username ? 1 : 0}
                 error_text={errors.username?.message}
               />
             ))}
+            <Button type='submit' disabled={isEditing}>
+              {isEditing ? 'Зачекайте...' : 'Зберегти'}
+            </Button>
           </div>
         </motion.div>
       </form>

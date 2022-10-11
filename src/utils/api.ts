@@ -22,6 +22,14 @@ export class api {
     return data;
   }
 
+  static async editProfile(profileData: Profile) {
+    const { data, error } = await supabase
+      .from<Profile>('profiles')
+      .upsert(profileData);
+    if (error) throw error;
+    return data;
+  }
+
   static async getAuthorsList() {
     const { data, error } = await supabase
       .from<Profile>('profiles')

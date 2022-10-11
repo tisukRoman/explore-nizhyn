@@ -4,11 +4,11 @@ import ProfileForm from '@components/ProfileForm';
 import Layout from '@components/Layout';
 
 const Profile: NextPage = () => {
-  const { data: profile, error, isLoading } = useGetProfile();
+  const { data: profile, error } = useGetProfile();
 
   const renderProfileForm = () => {
     if (profile) {
-      return <ProfileForm profile={profile} isLoading={isLoading} />;
+      return <ProfileForm profile={profile} />;
     } else if (error) {
       return <div>{error.message}</div>;
     } else {

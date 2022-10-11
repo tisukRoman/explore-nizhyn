@@ -40,3 +40,4 @@ export type LoginData = {
 export type PostData = Omit<PostTable, 'id' | 'created_at'>;
 
 export type CommentData = Omit<CommentTable, 'id' | 'created_at'>;
+
